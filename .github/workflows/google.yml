@@ -17,6 +17,7 @@ on:
     branches:
     - main
     - develop
+    - michael-dev
 
 env:
   PROJECT_ID: peerless-text-302903
