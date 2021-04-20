@@ -10,26 +10,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-/*
-const backend = {
-  entry: './src/backend/server.js',
-  target: 'node',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'server.js'
-  },
-  optimization: {
-    minimize: false
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'dist'),
-    filename: 'server.js',
-    port: 3000,
-  }
-
-};
-*/
-
 const frontend = {
   entry: './src/frontend/index.js',
   target: 'web',
@@ -71,4 +51,3 @@ const frontend = {
 };
 
 module.exports = frontend;
-// module.exports = [frontend, backend];
