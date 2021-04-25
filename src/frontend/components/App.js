@@ -5,6 +5,8 @@
 */
 
 import React from 'react';
+import Logo from './logo.png';
+
 // import '../styles/App.css';
 
 class App extends React.Component {
@@ -17,13 +19,20 @@ class App extends React.Component {
     };
 
     render() {
-        return(
+        return (
             <section>
-            <h2>Hello World</h2>
-            <h3>Hi Brita, our 1st frontend app!</h3>
+                <Header />
+                <h2>Hello World</h2>
+                <h3>Hi Brita, our 1st frontend app!</h3>
             </section>
         );
     };
 };
+
+function Header() {
+    return (
+    <img src={Logo} alt="Logo" />
+    )
+}
 
 export default App;
