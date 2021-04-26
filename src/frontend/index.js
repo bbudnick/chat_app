@@ -12,3 +12,5 @@ import App from './components/App';
 
 // ReactDOM.render(<App version = {packageJson.version}/>, document.getElementById('root'));
 ReactDOM.render(<App/>, document.getElementById('root'));
+
+  
