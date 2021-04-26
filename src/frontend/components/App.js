@@ -7,7 +7,6 @@
 import React from 'react';
 import Logo from './logo.png';
 
-// import '../styles/App.css';
 
 class App extends React.Component {
     constructor(props) {
