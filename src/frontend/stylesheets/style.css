@@ -2,6 +2,7 @@ body {
     padding: 5px
 }
 
-.Button {
+.Header {
     padding: 20px;
+    size: 40px; 
   }
