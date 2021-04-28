@@ -1,7 +1,7 @@
 /*
-    routes.js
+    router.js
 
-    The routes module which defines a separate route for all endpoints which the Express
+    The router module which defines a separate route for all endpoints which the Express
     server is listening for.
 
     Each route is defined via the Express router object.  The http method needs to be provided
