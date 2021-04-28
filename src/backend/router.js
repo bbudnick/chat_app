@@ -108,7 +108,7 @@ router.put('/file', async (req, res) => {
 
 router.delete('/deleteAll', async (req, res) => {
     try {
-        let response = await api.deleteAll(req.body);
+        let response = await api.deleteAll();
         res.json(response);
     } catch(err) {
         console.log(err);
