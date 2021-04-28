@@ -22,13 +22,93 @@ router.get('/hello', (req, res, next) => {
     res.json('World');
 });
 
-router.get('/|about|contact', (req,res) => {
-    res.sendFile(path.join(__dirname, '../../public/index.html'));
-});
+// router.get('/|about|contact', (req,res) => {
+//     res.sendFile(path.join(__dirname, '../../public/index.html'));
+// });
 
 router.post('/create', async (req, res) => {
     try {
         let response = await api.create(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/list', async (req, res) => {
+    try {
+        let response = await api.list();
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/join', async (req, res) => {
+    try {
+        let response = await api.join(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/leave', async (req, res) => {
+    try {
+        let response = await api.leave(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.post('/members', async (req, res) => {
+    try {
+        let response = await api.members(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/update', async (req, res) => {
+    try {
+        let response = await api.update(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.delete('/delete', async (req, res) => {
+    try {
+        let response = await api.del(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.put('/file', async (req, res) => {
+    try {
+        let response = await api.file(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
+router.delete('/deleteAll', async (req, res) => {
+    try {
+        let response = await api.deleteAll(req.body);
         res.json(response);
     } catch(err) {
         console.log(err);

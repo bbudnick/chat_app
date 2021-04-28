@@ -87,7 +87,7 @@ let dbJoin = async (request) => {
 let dbLeave = async (request) => {
     const client = await dbClient();
     const col = await dbCol(client);
-    const {id, myuser, users} = request;
+    const {id, users} = request;
     let oid = new mongodb.ObjectID(id);
     let results = await col.updateOne({ '_id' : oid}, { $set: {'users': users}}) // TBD try a users-myuser
         .then((res) => {return res; })

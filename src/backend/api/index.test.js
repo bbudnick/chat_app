@@ -1,26 +1,27 @@
 /* 
     index.test.js
 
-    Jest tests for the db module.  In most of the tests, we rely on an exception by the target 
+    Jest tests for the api module.  In most of the tests, we rely on an exception by the target 
     function to indicate if the test should pass.
 
 */
 
-const {dbCreate, dbList, dbJoin, dbLeave, dbMembers, dbUpdate, dbDelete, dbFile, dbDeleteAll} = require('./index');
+const {create, list, join, leave, members, update, del, file, deleteAll} = require('./index');
 
 const users = ['thor', 'tony stark', 'steve rogers', 'scott lang', 'hank pym', 'wanda maximoff'];
 const title = 'Avengers Chat';
+const myuser = 'natasha romanoff';
 const chat = ['Uh...Shakespeare in the Park? "Doth Mother know you weareth her drapes?"', 'This is beyond you, metal man. Loki will face Asgardian justice.'];
 const chat2 = 'Dr. Banner! Now might be a good time to get angry.'
 
 describe('Test db API round trip', () => {
 
     let newChatId = '';
-    test('dbCreate test', async () => {
+    test('create test', async () => {
         let rc = true;
         try {
             let request = {'users':users, 'title':title, 'chat':chat};
-            let results = await dbCreate(request);
+            let results = await create(request);
             newChatId = results.insertedId;
         } catch (err) {
             rc = false;
@@ -29,45 +30,45 @@ describe('Test db API round trip', () => {
         expect( rc ).toBe(true);
     });
 
-    test('dbList test', async () => {
+    test('list test', async () => {
         let rc = true;
         try {
-            let results = await dbList();
-            console.log(`Chat rooms:`);
-            results.forEach(element => console.log(`${element._id}: ${element.title}`));
+            let results = await list();
+            // console.log(`Chat rooms:`);
+            // results.forEach(element => console.log(`${element._id}: ${element.title}`));
         } catch (err) {
             rc = false;
         }
         expect( rc ).toBe(true);
     });
 
-    test('dbJoin test', async () => {
+    test('join test', async () => {
         let rc = true;
         try {
-            let request = {'id':'6089a46b2bece4ab01b6f424', 'users':users.concat(['natasha romanov'])};
-            let results = await dbJoin(request);
+            let request = {'id':'6089a46b2bece4ab01b6f424', 'users':users.concat(['pepper potts'])};
+            let results = await join(request);
         } catch (err) {
             rc = false;
         }
         expect( rc ).toBe(true);
     });
 
-    test('dbLeave test', async () => {
+    test('leave test', async () => {
         let rc = true;
         try {
-            let request = {'id':'6089a4aafc0fbcab46f2e999', 'users':users.filter(user => user !== 'thor')};
-            let results = await dbLeave(request);
+            let request = {'id':'6089a4aafc0fbcab46f2e999', 'users':users.filter(user => user !== 'steve rogers')};
+            let results = await leave(request);
         } catch (err) {
             rc = false;
         }
         expect( rc ).toBe(true);
     });
     
-    test('dbMembers test', async () => {
+    test('members test', async () => {
         let rc = true;
         try {
             let request = {'id':'6089a46b2bece4ab01b6f424'};
-            let results = await dbMembers(request);
+            let results = await members(request);
             console.log(`Members of ${results[0].title} \n ${results[0].users}`);
         } catch (err) {
             rc = false;
@@ -75,22 +76,22 @@ describe('Test db API round trip', () => {
         expect( rc ).toBe(true);
     });
 
-    test('dbUpdate test', async () => {
+    test('update test', async () => {
         let rc = true;
         try {
             let request = {'id':'6089b4ec417b0ab5c41c3fbb', 'chat':chat.concat([chat2])};
-            let results = await dbUpdate(request);
+            let results = await update(request);
         } catch (err) {
             rc = false;
         }
         expect( rc ).toBe(true);
     });    
     
-    test('dbDelete test', async () => {
+    test('delete test', async () => {
         let rc = true;
         try {
             let request = {'id':newChatId};
-            let results = await dbDelete(request);
+            let results = await del(request);
         } catch (err) {
             rc = false;
         }
