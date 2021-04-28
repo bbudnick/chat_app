@@ -28,8 +28,7 @@ router.get('/|about|contact', (req,res) => {
 
 router.post('/create', async (req, res) => {
     try {
-        const {users, title, chat} = req.body;
-        let response = await api.create(users, title, chat);
+        let response = await api.create(req.body);
         res.json(response);
     } catch(err) {
         console.log(err);
