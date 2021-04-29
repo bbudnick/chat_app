@@ -5,5 +5,13 @@
 */
 
 const create = require('./create');
+const list = require('./list');
+const join = require('./join');
+const leave = require('./leave'); 
+const members = require('./members');
+const update = require('./update');
+const del = require('./delete');
+const file = require('./file');
+const deleteAll = require('./deleteAll');
 
-module.exports = { create };
+module.exports = { create, list, join, leave, members, update, del, file, deleteAll  };
