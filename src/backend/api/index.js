@@ -12,6 +12,6 @@ const members = require('./members');
 const update = require('./update');
 const del = require('./delete');
 const file = require('./file');
-const deleteAll = require('./deleteAll');
+const deleteAll = require('./deleteall');
 
 module.exports = { create, list, join, leave, members, update, del, file, deleteAll  };
