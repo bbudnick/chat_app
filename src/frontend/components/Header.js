@@ -3,7 +3,7 @@
 */
 
 import React from 'react';
-import '../stylesheets/style.css';
+import '../styles/App.css';
 import Logo from './logo.png';
 
 export function Header() {

@@ -6,10 +6,9 @@
 
 
 import React from 'react';
-import '../stylesheets/style.css';
-import Logo from './logo.png';
+import '../styles/App.css';
 
-export function ChatLibrary() {
+export function SideBar() {
     return (
         <div>Empty</div>
     );

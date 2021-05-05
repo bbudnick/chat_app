@@ -5,34 +5,29 @@
 */
 
 import React from 'react';
-import '../stylesheets/style.css';
-import { ChatLibrary } from './ChatLibrary';
-import { CurChatRoom } from './CurChatRoom';
-import { Header } from './Header';
-import { Footer } from './Footer';
-
+import { HomePage } from './HomePage';
+import '../styles/App.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            user: ''
+        };
     };
 
     componentDidMount() {
+        this.setState({user: "brita-budnick"});
+        this.setState({version: this.props.version});
     };
 
     render() {
         return (
-            <section>
-                <h2>Hello World</h2>
-                <h3>Hi Brita, our 1st frontend app!</h3>
-                <Header />
-                <ChatLibrary />
-                <CurChatRoom />
-                <Footer />
-                
-
-            </section>
+            <Router>
+                <Route exact path="/" render={() => <HomePage user={this.state.user}/>}/>
+            </Router>
+            
         );
     };
 };
