@@ -5,9 +5,14 @@
 */
 
 import React from 'react';
-import { HomePage } from './HomePage';
+import { Header } from './Header';
+import { NavBar } from './NavBar';
+import { MessageBox } from './MessageBox';
+import { SideBar } from './SideBar';
+import { Footer } from './Footer';
+import { Loader } from "react-loader-spinner";
+import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll } from './Api';
 import '../styles/App.css';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 class App extends React.Component {
     constructor(props) {
@@ -18,16 +23,19 @@ class App extends React.Component {
     };
 
     componentDidMount() {
-        this.setState({user: "brita-budnick"});
-        this.setState({version: this.props.version});
+        this.setState({ user: "brita-budnick" });
+        this.setState({ version: this.props.version });
     };
 
     render() {
         return (
-            <Router>
-                <Route exact path="/" render={() => <HomePage user={this.state.user}/>}/>
-            </Router>
-            
+            <div>
+                <Header />
+                <NavBar />
+                <MessageBox />
+                <SideBar />
+                <Footer />
+            </div>
         );
     };
 };
