@@ -5,25 +5,46 @@
 */
 
 import React from 'react';
-// import '../styles/App.css';
+import { Header } from './Header';
+import { NavBar } from './NavBar';
+import { MessageBox } from './MessageBox';
+import { SideBar } from './SideBar';
+import { Footer } from './Footer';
+import { Loader } from "react-loader-spinner";
+import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll } from './Api';
+import { CurChatRoom } from './CurChatRoom';
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            chatrooms: '',
+            user: ''
+        };
     };
 
     componentDidMount() {
+        //call apiList to list the chatrooms 
+        
+        //save as tuple of id and chatroom name 
+        //
+        this.setState({ user: "brita-budnick" });
+        this.setState({ version: this.props.version });
     };
 
     render() {
-        return(
-            <section>
-            <h2>Hello World</h2>
-            <h3>Hi Brita, our 1st frontend app!</h3>
-            </section>
+        return (
+            <div>
+                <Header />
+                <NavBar />
+                <CurChatRoom />
+                <MessageBox />
+                <SideBar />
+                <Footer />
+            </div>
         );
     };
 };
+
 
 export default App;

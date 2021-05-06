@@ -15,10 +15,10 @@
 
 const  { dbCreate } = require('../db');
 
-const create = async (request) => {
-    if (request.title == undefined) { request.title = "This is my test chat room"; }
+const create = async (users, title, chat) => {
+    if (note == undefined) { chat = "This is my test chat room"; }
 
-    let result = await dbCreate(request)
+    let result = await dbCreate(users, title, chat)
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbCreate failed', err) });
 

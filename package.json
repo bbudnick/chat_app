@@ -6,10 +6,12 @@
   "main": "src/backend/server.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "bootstrap": "^4.6.0",
     "express": "^4.17.1",
     "mongodb": "^3.6.3",
     "nodemon": "^2.0.7",
     "react": "^17.0.1",
+    "react-color": "^2.19.3",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-loader-spinner": "^4.0.0",
@@ -22,6 +24,13 @@
     "test": "jest --forceExit --detectOpenHandles",
     "clean": "rm -rf dist public",
     "debug": "nodemon --inspect src/backend/server.js"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest",
+      ".+\\.(css|styl|less|sass|scss)$": "jest-transform-css",
+      ".+\\.(jpe?g|png|gif|svg)$": "<rootDir>/src/frontend/jest/assetTransformer.js"
+    }
   },
   "devDependencies": {
     "@axe-core/react": "^4.1.1",

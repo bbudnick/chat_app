@@ -46,7 +46,7 @@ export const apiCreate = async (request) => {
             'Content-Type': 'application/json'
         },
         method: "POST",
-        body: JSON.stringify({request)
+        body: JSON.stringify(request)
     })
     .then(res => {
         if(res.status >= 300) { throw new Error(res.statusText); }

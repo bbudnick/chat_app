@@ -5,7 +5,7 @@ COPY package.json .
 
 RUN npm install
 COPY . .
-# RUN npm run test 
+# RUN npm run test && npm run build
 RUN npm run build
 
 CMD ["npm", "run", "start"]
