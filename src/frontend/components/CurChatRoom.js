@@ -5,10 +5,9 @@
 
 import React from 'react';
 import '../styles/App.css';
-import Logo from './logo.png';
 
 export function CurChatRoom() {
     return (
-        <div>Empty</div>
+        <div>Empty Current Chat Room</div>
     );
 };

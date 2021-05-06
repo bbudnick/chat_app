@@ -10,6 +10,6 @@ import '../styles/App.css';
 
 export function SideBar() {
     return (
-        <div>Empty</div>
+        <div>Empty Side Bar</div>
     );
 };

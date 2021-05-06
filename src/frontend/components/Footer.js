@@ -7,6 +7,6 @@ import '../styles/App.css';
 
 export function Footer() {
     return (
-        <div>Empty</div>
+        <div>Empty Footer</div>
     );
 };

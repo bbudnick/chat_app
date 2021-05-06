@@ -7,6 +7,6 @@ import '../styles/App.css';
 
 export function NavBar() {
     return (
-        <img src={Logo} alt="Logo" />
+        <div>Empty Nav Bar</div>
     );
 };
