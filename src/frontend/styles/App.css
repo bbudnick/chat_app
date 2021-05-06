@@ -10,9 +10,9 @@
   
   /* Header/logo Title */
   .header {
-    padding: 80px;
+    padding: 25px;
     text-align: center;
-    background: #1abc9c;
+    background: #b7db73;
     color: white;
   }
   
@@ -21,9 +21,10 @@
     font-size: 40px;
   }
 
-  .avatar {
+  .header img {
     vertical-align: left;
-
+    width: 20%;
+    height: 100px;
   }
   
   /* Sticky navbar - toggles between relative and fixed, depending on the scroll position. It is positioned relative until a given offset position is met in the viewport - then it "sticks" in place (like position:fixed). The sticky value is not supported in IE or Edge 15 and earlier versions. However, for these versions the navbar will inherit default position */
@@ -85,13 +86,6 @@
     -ms-flex: 70%; /* IE10 */
     flex: 70%;
     background-color: white;
-    padding: 20px;
-  }
-  
-  /* Fake image, just for this example */
-  .fakeimg {
-    background-color: #aaa;
-    width: 100%;
     padding: 20px;
   }
   

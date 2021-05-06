@@ -6,6 +6,6 @@ import React from 'react';
 
 export function Footer() {
     return (
-        <div>Empty Footer</div>
+        <div></div>
     );
 };

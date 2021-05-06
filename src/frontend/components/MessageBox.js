@@ -9,7 +9,7 @@ import React from 'react';
 
 export function MessageBox(props) {
     return (
-        <div>Empty Message Box</div>
+        <div></div>
     );
 };
     

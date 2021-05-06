@@ -6,6 +6,6 @@ import React from 'react';
 
 export function NavBar() {
     return (
-        <div>Empty Nav Bar</div>
+        <div></div>
     );
 };

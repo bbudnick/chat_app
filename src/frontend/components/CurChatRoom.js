@@ -8,6 +8,6 @@ import '../styles/App.css';
 
 export function CurChatRoom() {
     return (
-        <div>Empty Current Chat Room</div>
+        <div></div>
     );
 };

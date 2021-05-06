@@ -9,6 +9,6 @@ import React from 'react';
 
 export function SideBar() {
     return (
-        <div>Empty Side Bar</div>
+        <div></div>
     );
 };
