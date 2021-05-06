@@ -1,33 +1,43 @@
 /*
     Api.js
+
     All API function calls. 
+
     apiCreate: Create a new chat room record
         parameters: 
                 JSON payload containing users, title
     apiList: List all chat rooms
         parameters: 
                 None
+
     apiJoin: Append a new user to the chat room
         parameters:
                 JSON payload containing updated users and chat room id
+
     apiLeave: Remove a user from the chat room
         parameters:
                 JSON payload containing updated users and chat room id
+
     apiMembers: List members of a chat room
         parameters:
                 JSON payload containing chat room id
+
     apiUpdate: Update the chat property of a chat room
         parameters:
                 JSON payload containing chat room id, updated chat string
+
     apiDelete: Delete a specific chat room
         parameters:
                 JSON payload containing chat room id
+
     apiFile: Add a file to a chat room
         parameters:
                 JSON payload containing chat room id, b64 encoded file
+
     apiDeleteAll: Delete all chat rooms
         parameters:
                 None
+
 */
 
 export const apiCreate = async (request) => {
