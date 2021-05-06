@@ -6,7 +6,6 @@
 */
 
 import React from 'react';
-import '../styles/App.css';
 
 export function MessageBox(props) {
     return (

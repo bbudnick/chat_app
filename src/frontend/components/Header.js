@@ -9,8 +9,8 @@ import Logo from './logo.png';
 export function Header() {
     return (
         <div>
-            <h1 className={styles.bigblue}>Header of Glory!</h1>;
-            <img src={Logo} alt="Logo" />;
+            <img className={styles.avatar} src={Logo} alt="Logo"/>
+            <h1 className={styles.bigblue}>Header of Glory!</h1>
         </div>
     );
 };
