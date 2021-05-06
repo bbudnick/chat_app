@@ -13,7 +13,6 @@ import { SideBar } from './SideBar';
 import { Footer } from './Footer';
 import { Loader } from "react-loader-spinner";
 import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll } from './Api';
-import styles from '../styles/App.module.css';
 
 class App extends React.Component {
     constructor(props) {
