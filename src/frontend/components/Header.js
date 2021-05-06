@@ -3,11 +3,14 @@
 */
 
 import React from 'react';
-import '../styles/App.css';
+import styles from '../styles/Header.module.css';
 import Logo from './logo.png';
 
 export function Header() {
     return (
-        <img src={Logo} alt="Logo" />
+        <div>
+            <h1 className={styles.bigblue}>Header of Glory!</h1>;
+            <img src={Logo} alt="Logo" />;
+        </div>
     );
 };
