@@ -8,6 +8,13 @@ import '../styles/App.css';
 
 export function CurChatRoom() {
     return (
-        <div></div>
+        <div className="row">
+            <div className="side">
+                <h2>Chat Rooms</h2>
+            </div>
+            <div className="main">
+                <h2>Current Chat Room</h2>
+            </div>
+        </div>
     );
 };

@@ -5,7 +5,6 @@
 */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import { MessageBox } from './MessageBox';
@@ -13,6 +12,7 @@ import { SideBar } from './SideBar';
 import { Footer } from './Footer';
 import { Loader } from "react-loader-spinner";
 import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll } from './Api';
+import { CurChatRoom } from './CurChatRoom';
 
 class App extends React.Component {
     constructor(props) {
@@ -36,6 +36,7 @@ class App extends React.Component {
             <div>
                 <Header />
                 <NavBar />
+                <CurChatRoom />
                 <MessageBox />
                 <SideBar />
                 <Footer />
