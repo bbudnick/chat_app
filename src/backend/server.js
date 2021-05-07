@@ -10,12 +10,12 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const routes = require('./routes');
+const router = require('./router');
 const app = express();
 
 app.use(express.static('public'));
 app.use( bodyParser.json());
-app.use(routes);
+app.use(router);
 
 const port = process.env.PORT || 80;
 const server = app.listen(port, () => console.log(`Server listening on port: ${port}`));
