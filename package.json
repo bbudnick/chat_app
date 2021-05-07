@@ -25,13 +25,6 @@
     "clean": "rm -rf dist public",
     "debug": "nodemon --inspect src/backend/server.js"
   },
-  "jest": {
-    "transform": {
-      "^.+\\.js$": "babel-jest",
-      ".+\\.(css|styl|less|sass|scss)$": "jest-transform-css",
-      ".+\\.(jpe?g|png|gif|svg)$": "<rootDir>/src/frontend/jest/assetTransformer.js"
-    }
-  },
   "devDependencies": {
     "@axe-core/react": "^4.1.1",
     "@babel/core": "^7.12.13",
