@@ -7,8 +7,23 @@
 
 import React from 'react';
 
-export function SideBar() {
+export function SideBar(props) {
+    const { chatrooms } = props.chatrooms; 
     return (
-        <div></div>
+        <div>
+            <h3>Current Chatrooms</h3>
+            <hr />
+            { chatrooms && 
+                chatrooms.map(chatroom => {
+                    return (
+                            <ul>
+                                <li>{chatroom._id}</li>
+                                <li>
+                                    <p key={chatroom._id}>{chatroom.title}</p>
+                                </li>
+                            </ul>
+                    )
+                })}
+        </div>
     );
 };

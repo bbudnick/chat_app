@@ -18,14 +18,31 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            chatrooms: '',
+            chatrooms: [],
             user: ''
         };
+        /* This would be appropriate for a callback */
+        //this.apiList = this.apiList.bind(this)
     };
 
-    componentDidMount() {
+    async componentDidMount() {
         //call apiList to list the chatrooms 
-        
+        let temp = await apiList();
+        temp.forEach(obj => {
+            Object.entries(obj).forEach(([key, value]) =>
+                console.log(`${key} ${value}`));
+        });
+
+    
+
+
+        //this.setState({chatrooms: result});
+        console.log(result);
+
+
+
+
+
         //save as tuple of id and chatroom name 
         //
         this.setState({ user: "brita-budnick" });
@@ -39,7 +56,7 @@ class App extends React.Component {
                 <NavBar />
                 <CurChatRoom />
                 <MessageBox />
-                <SideBar />
+                {/* <SideBar props={this.state.chatrooms}/>  */}
                 <Footer />
             </div>
         );
