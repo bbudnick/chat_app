@@ -27,26 +27,17 @@ class App extends React.Component {
 
     async componentDidMount() {
         //call apiList to list the chatrooms 
-        let temp = await apiList();
-        temp.forEach(obj => {
-            Object.entries(obj).forEach(([key, value]) =>
-                console.log(`${key} ${value}`));
+        let currentChatrooms = await apiList();
+        let arr = []; 
+        Object.keys(currentChatrooms).forEach(function(key) {
+            arr.push(currentChatrooms[key]);
         });
 
-    
 
 
-        //this.setState({chatrooms: result});
-        console.log(result);
-
-
-
-
-
-        //save as tuple of id and chatroom name 
-        //
         this.setState({ user: "brita-budnick" });
         this.setState({ version: this.props.version });
+        this.setState({ chatrooms : arr});
     };
 
     render() {
@@ -56,7 +47,7 @@ class App extends React.Component {
                 <NavBar />
                 <CurChatRoom />
                 <MessageBox />
-                {/* <SideBar props={this.state.chatrooms}/>  */}
+                <SideBar data={this.state.chatrooms}/>
                 <Footer />
             </div>
         );
