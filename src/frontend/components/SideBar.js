@@ -8,15 +8,10 @@
 import React from 'react';
 
 export function SideBar(props) {
-    return (
-        <div className="currentChat">
+   return (
+        <div>
             <ul>
-                <li>
-                    {props._id}
-                </li>
-                <li>
-                    {props.title}
-                </li>
+                {props.data.map(({ _id, title}, index) => <li key={index}>ID: {_id}, Title: {title}</li>)}
             </ul>
         </div>
     )
