@@ -1,19 +1,25 @@
 import React, { useState } from "react";
-import { apiCreate } from "./Api";
+import { apiList, apiDelete } from './Api';
 
-export function NewChatRoomForm(props) {
+export function DeleteChatRoomForm(props) {
     const [name, setName] = useState("");
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        //append new chatroom title to list of chatrooms
-        // TODO add api call 
-        alert(`Creating new chatroom ${name}`)
+        //Check if chatroom exists 
+        let chatRoomCheck = apiList(name);
+        if (chatRoomCheck == true) {
+            //Delete chatroom from list of existing chatrooms
+            apiDelete(name);
+            alert(`Deleting chatroom ${name}`)
+        }
+        else
+            alert(`Unable to delete ${name}, does not exist`)
     }
     return (
         <form onSubmit={handleSubmit}>
             <label>
-                Name of new chatroom:
+                Name of chatroom to be deleted:
             <input
                     type="text"
                     value={name}
