@@ -14,11 +14,12 @@ const app = express();
 app.use( bodyParser.json());
 app.use(router);
 
-const users = ['thor', 'tony stark', 'steve rogers', 'scott lang', 'hank pym', 'wanda maximoff'];
-const title = 'Avengers Chat';
-const myuser = 'natasha romanoff';
-const chat = ['Uh...Shakespeare in the Park? "Doth Mother know you weareth her drapes?"', 'This is beyond you, metal man. Loki will face Asgardian justice.'];
-const chat2 = 'Dr. Banner! Now might be a good time to get angry.'
+const users = ['Charles Xavier', 'Logan', 'Jean Grey', 'Bobby'];
+const newuser = 'Magneto';
+const olduser = 'Jean Grey';
+const title = 'X-Men Chat';
+const message1 = [{'user':users[3], 'message':'Call me Iceman.'}, {'user':users[1], 'message':'Boyfriend?  So how do you guys...?'}];
+const message2 = {'user':users[3], 'message':'Well, we\'re still working on that.'};
 
 describe('Test router endpoint round trip', () => {
     let newChatId = '';
@@ -31,7 +32,7 @@ describe('Test router endpoint round trip', () => {
     });
 
     test('POST /create test', async () => {
-        let request = {'users':users, 'title':title, 'chat':chat};
+        let request = {'users':users, 'title':title};
         const {body} = await supertest(app)
             .post('/create')
             .send(request)
@@ -49,7 +50,7 @@ describe('Test router endpoint round trip', () => {
     });
 
     test('PUT /join test', async () => {
-        let request = {'id':'6089b50a5f3b14b5f308da7d', 'users':users.concat(['sam wilson'])};
+        let request = {'id':newChatId, 'users':users.concat([newuser])};
         const result = await supertest(app)
             .put('/join')
             .send(request)
@@ -58,8 +59,17 @@ describe('Test router endpoint round trip', () => {
 
     });
 
+    test('POST /members join test', async () => {
+        let request = {'id':newChatId};
+        const result = await supertest(app)
+            .post('/members')
+            .send(request)
+            .set('Accept', 'application/json')
+            .expect(200);
+    });
+
     test('PUT /leave test', async () => {
-        let request = {'id':'6089b5617aa47ab64d191765', 'users':users.filter(user => user !== 'tony stark')};
+        let request = {'id':newChatId, 'users':users.filter(user => user !== olduser)};
         const result = await supertest(app)
             .put('/leave')
             .send(request)
@@ -67,8 +77,8 @@ describe('Test router endpoint round trip', () => {
             .expect(200);
     });
 
-    test('POST /members test', async () => {
-        let request = {'id':'6089a46b2bece4ab01b6f424'};
+    test('POST /members leave test', async () => {
+        let request = {'id':newChatId};
         const result = await supertest(app)
             .post('/members')
             .send(request)
@@ -77,7 +87,25 @@ describe('Test router endpoint round trip', () => {
     });
 
     test('PUT /update test', async () => {
-        let request = {'id':'6089b5e1333ef6b6d1ede6a1', 'chat':chat.concat(['These guys come from legend, Captain. Theyre basically Gods.'])};
+        let request = {'id':newChatId, 'chat':message1};
+        const result = await supertest(app)
+            .put('/update')
+            .send(request)
+            .set('Accept', 'application/json')
+            .expect(200);
+    });
+
+    test('POST /chat test', async () => {
+        let request = {'id':newChatId};
+        const result = await supertest(app)
+            .post('/chat')
+            .send(request)
+            .set('Accept', 'application/json')
+            .expect(200);
+    });    
+
+    test('PUT /update test', async () => {
+        let request = {'id':newChatId, 'chat':message1.concat([message2])};
         const result = await supertest(app)
             .put('/update')
             .send(request)

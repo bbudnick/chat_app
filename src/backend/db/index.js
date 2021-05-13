@@ -149,6 +149,19 @@ let dbFile = async (request) => {
     return results;
 };
 
+let dbChat = async (request) => {
+    const client = await dbClient();
+    const col = await dbCol(client);
+    const {id} = request;
+    let oid = new mongodb.ObjectID(id);
+    let results = await col.find({ '_id': oid}).toArray() // TBD return only chat
+        .then((res) => {return res; })
+        .catch((err) => { console.log('DB find from id failed', err); });
+    client.close();
+
+    return results;
+};
+
 let dbDeleteAll = async () => {
     const client = await dbClient();
     const col = await dbCol(client);
@@ -160,4 +173,4 @@ let dbDeleteAll = async () => {
     return results;
 };
 
-module.exports = { dbCreate, dbList, dbJoin, dbLeave, dbMembers, dbUpdate, dbDelete, dbFile, dbDeleteAll };
+module.exports = { dbCreate, dbList, dbJoin, dbLeave, dbMembers, dbUpdate, dbDelete, dbFile, dbChat, dbDeleteAll };

@@ -106,6 +106,16 @@ router.put('/file', async (req, res) => {
     }
 });
 
+router.post('/chat', async (req, res) => {
+    try {
+        let response = await api.chat(req.body);
+        res.json(response);
+    } catch(err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
+});
+
 router.delete('/deleteAll', async (req, res) => {
     try {
         let response = await api.deleteAll();

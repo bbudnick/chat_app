@@ -6,96 +6,154 @@
 
 */
 
-const {create, list, join, leave, members, update, del, file, deleteAll} = require('./index');
+const {create, list, join, leave, members, update, del, file, chat, deleteAll} = require('./index');
 
-const users = ['thor', 'tony stark', 'steve rogers', 'scott lang', 'hank pym', 'wanda maximoff'];
-const title = 'Avengers Chat';
-const myuser = 'natasha romanoff';
-const chat = ['Uh...Shakespeare in the Park? "Doth Mother know you weareth her drapes?"', 'This is beyond you, metal man. Loki will face Asgardian justice.'];
-const chat2 = 'Dr. Banner! Now might be a good time to get angry.'
+const users = ['Arthur Curry', 'Bruce Wayne', 'Alfred Pennyworth', 'Diana Prince'];
+const newuser = 'Steppenwolf';
+const olduser = 'Diana Prince';
+const title = 'Justice League Chat';
+const message1 = [{'user':users[0], 'message':'So let me get this straight.  You do it dressed like a bat? Like an actual bat?'}, {'user':users[1], 'message':'Worked for twenty years in Gotham.'}];
+const message2 = {'user':users[0], 'message':'Oh, that s**thole.'};
 
-describe('Test db API round trip', () => {
+describe('Test API round trip', () => {
 
     let newChatId = '';
     test('create test', async () => {
         let rc = true;
         try {
-            let request = {'users':users, 'title':title, 'chat':chat};
+            let request = {'users':users, 'title':title};
             let results = await create(request);
             newChatId = results.insertedId;
         } catch (err) {
-            rc = false;
+            console.log(`create failed`);
         }
-        console.log("results: " + newChatId);
-        expect( rc ).toBe(true);
+        console.log("created: " + newChatId);
+        expect(JSON.stringify(newChatId)).toMatch(/[a-z0-9]{20,30}/); // alphanumeric string between 20 and 30 chars
     });
 
     test('list test', async () => {
-        let rc = true;
+        let newRoom = '';
         try {
             let results = await list();
-            // console.log(`Chat rooms:`);
-            // results.forEach(element => console.log(`${element._id}: ${element.title}`));
+            newRoom = results.filter(item => JSON.stringify(item._id).includes(newChatId));
         } catch (err) {
-            rc = false;
+            console.log(`list failed`);
         }
-        expect( rc ).toBe(true);
+        expect(JSON.stringify(newRoom[0]._id)).toBe(JSON.stringify(newChatId));
     });
 
     test('join test', async () => {
-        let rc = true;
+        let modified = 0;
         try {
-            let request = {'id':'6089a46b2bece4ab01b6f424', 'users':users.concat(['pepper potts'])};
+            let request = {'id':newChatId, 'users':users.concat([newuser])};
+            // let request = {'id':newChatId, 'users':newuser};
             let results = await join(request);
+            modified = results.result.n;
         } catch (err) {
-            rc = false;
+            console.log(`join failed`);
         }
-        expect( rc ).toBe(true);
+        expect(modified).toBe(1);
+    });
+
+    test('members join test', async () => {
+        let roomMembers = '';
+        try {
+            let request = {'id':newChatId};
+            let results = await members(request);
+            roomMembers = results.filter(item => JSON.stringify(item._id).includes(newChatId));
+            console.log(`Members of ${roomMembers[0].title} \n ${roomMembers[0].users}`);
+        } catch (err) {
+            console.log(`members failed`);
+        }
+        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify(users.concat([newuser])));
     });
 
     test('leave test', async () => {
-        let rc = true;
+        let modified = 0;
         try {
-            let request = {'id':'6089a4aafc0fbcab46f2e999', 'users':users.filter(user => user !== 'steve rogers')};
+            let request = {'id':newChatId, 'users':users.filter(user => user !== olduser)};
             let results = await leave(request);
+            modified = results.result.n;
         } catch (err) {
-            rc = false;
+            console.log(`leave failed`);
         }
-        expect( rc ).toBe(true);
+        expect(modified).toBe(1);
     });
     
-    test('members test', async () => {
-        let rc = true;
+    test('members leave test', async () => {
+        let roomMembers = '';
         try {
-            let request = {'id':'6089a46b2bece4ab01b6f424'};
+            let request = {'id':newChatId};
             let results = await members(request);
-            console.log(`Members of ${results[0].title} \n ${results[0].users}`);
+            roomMembers = results.filter(item => JSON.stringify(item._id).includes(newChatId));
+            console.log(`Members of ${roomMembers[0].title} \n ${roomMembers[0].users}`);
         } catch (err) {
-            rc = false;
+            console.log(`members failed`);
         }
-        expect( rc ).toBe(true);
+        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify(users.filter(user => user !== olduser)));
     });
 
     test('update test', async () => {
-        let rc = true;
+        let modified = 0;
         try {
-            let request = {'id':'6089b4ec417b0ab5c41c3fbb', 'chat':chat.concat([chat2])};
+            let request = {'id':newChatId, 'chat':message1};
             let results = await update(request);
+            modified = results.result.n;
         } catch (err) {
-            rc = false;
+            console.log(`update failed`);
         }
-        expect( rc ).toBe(true);
-    });    
+        expect(modified).toBe(1);
+    });   
     
+    test('chat test', async () => {
+        let newChat = '';
+        try {
+            let request = {'id':newChatId};
+            let results = await chat(request);
+            console.log(`Chat of ${results[0].title} \n ${JSON.stringify(results[0].chat)}`);
+            newChat = results[0].chat;
+        } catch (err) {
+            console.log(`chat failed`);
+        }
+        expect(newChat).toStrictEqual(message1);
+    });
+
+    test('update concat test', async () => {
+        let modified = 0;
+        try {
+            let request = {'id':newChatId, 'chat':message1.concat([message2])};
+            let results = await update(request);
+            modified = results.result.n;
+        } catch (err) {
+            console.log(`update failed`);
+        }
+        expect(modified).toBe(1);
+    }); 
+
+    test('chat concat test', async () => {
+        let newChat = '';
+        try {
+            let request = {'id':newChatId};
+            let results = await chat(request);
+            console.log(`Chat of ${results[0].title} \n ${JSON.stringify(results[0].chat)}`);
+            newChat = results[0].chat;
+        } catch (err) {
+            console.log(`chat failed`);
+        }
+        expect(newChat).toStrictEqual(message1.concat([message2]));
+    });
+
     test('delete test', async () => {
-        let rc = true;
+        let modified = 0;
         try {
             let request = {'id':newChatId};
             let results = await del(request);
+            modified = results.result.n;
+            console.log(`deleted ${newChatId}`);
         } catch (err) {
-            rc = false;
+            console.log(`delete failed`);
         }
-        expect( rc ).toBe(true);
+        expect(modified).toBe(1);
     });
 
 });
