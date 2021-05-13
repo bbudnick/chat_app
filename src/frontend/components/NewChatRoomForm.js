@@ -13,7 +13,7 @@ export function NewChatRoomForm(props) {
     return(
         <form onSubmit={handleSubmit}>
         <label>
-            First Name:
+            Name of new chatroom: 
             <input 
                 type="text" 
                 value={name}

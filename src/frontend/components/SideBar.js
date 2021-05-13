@@ -21,7 +21,6 @@ export function SideBar(props) {
                 </ul>
                 <Button id="Popover1" type="button">Make a new chat?</Button>
                 <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
-                    <PopoverHeader>Name the chat: </PopoverHeader>
                     <PopoverBody><NewChatRoomForm/></PopoverBody>
                 </Popover>
             </div>
