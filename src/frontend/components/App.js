@@ -4,7 +4,8 @@
 *
 */
 
-import React from 'react';
+import React, { useState } from 'react';
+
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import { MessageBox } from './MessageBox';
@@ -28,16 +29,23 @@ class App extends React.Component {
     async componentDidMount() {
         //call apiList to list the chatrooms 
         let currentChatrooms = await apiList();
-        let arr = []; 
-        Object.keys(currentChatrooms).forEach(function(key) {
+        let arr = [];
+        Object.keys(currentChatrooms).forEach((key) => {
             arr.push(currentChatrooms[key]);
         });
+        console.log(arr);
+
+
+
+        //send id to api call chatroom 
+        //entire record will be returned 
+
 
 
 
         this.setState({ user: "brita-budnick" });
         this.setState({ version: this.props.version });
-        this.setState({ chatrooms : arr});
+        this.setState({ chatrooms: arr });
     };
 
     render() {
@@ -47,7 +55,7 @@ class App extends React.Component {
                 <NavBar />
                 <CurChatRoom />
                 <MessageBox />
-                <SideBar data={this.state.chatrooms}/>
+                <SideBar data={this.state.chatrooms} />
                 <Footer />
             </div>
         );
