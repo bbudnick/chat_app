@@ -113,6 +113,25 @@ export const apiLeave = async (request) => {
     return result;
 };
 
+export const apiMembers = async (request) => {
+    let result = await fetch('/members', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(request)
+    })
+    .then(res => {
+        if(res.status >= 300) { throw new Error(res.statusText); }
+        return res.json();
+    })
+    .then(list => { return list; })
+    .catch(err => {
+        console.log(err); 
+    });
+    return result;
+};
+
 export const apiUpdate = async (request) => {
     let result = await fetch('/update', {
         headers: {
@@ -127,6 +146,44 @@ export const apiUpdate = async (request) => {
     })
     .then(list => { return list; })
     .catch(err => { 
+        console.log(err); 
+    });
+    return result;
+};
+
+export const apiFile = async (request) => {
+    let result = await fetch('/file', {
+        headers: {
+            'Content-Type': 'application/json'
+        },        
+        method: 'PUT',
+        body: JSON.stringify(request)
+    })
+    .then(res => {
+        if(res.status >= 300) { throw new Error(res.statusText); }
+        return res.json();
+    })
+    .then(list => { return list; })
+    .catch(err => { 
+        console.log(err); 
+    });
+    return result;
+};
+
+export const apiChat = async (request) => {
+    let result = await fetch('/chat', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify(request)
+    })
+    .then(res => {
+        if(res.status >= 300) { throw new Error(res.statusText); }
+        return res.json();
+    })
+    .then(list => { return list; })
+    .catch(err => {
         console.log(err); 
     });
     return result;
@@ -148,25 +205,6 @@ export const apiDelete = async (request) => {
         console.log(err); 
     });
     return result;    
-};
-
-export const apiFile = async (request) => {
-    let result = await fetch('/file', {
-        headers: {
-            'Content-Type': 'application/json'
-        },        
-        method: 'PUT',
-        body: JSON.stringify(request)
-    })
-    .then(res => {
-        if(res.status >= 300) { throw new Error(res.statusText); }
-        return res.json();
-    })
-    .then(list => { return list; })
-    .catch(err => { 
-        console.log(err); 
-    });
-    return result;
 };
 
 export const apiDeleteAll = async () => {
