@@ -12,8 +12,8 @@ const users = ['thor', 'tony stark', 'steve rogers', 'scott lang', 'hank pym', '
 const newuser = 'natasha romanov';
 const olduser = 'thor';
 const title = 'Avengers Chat';
-const chat = [{'user':users[1], 'message':'Uh...Shakespeare in the Park? Doth Mother know you weareth her drapes?'}, {'user':users[0], 'message':'This is beyond you, metal man. Loki will face Asgardian justice.'}];
-const chat2 = {'user':users[2], 'message':'Dr. Banner! Now might be a good time to get angry.'};
+const message1 = [{'user':users[1], 'message':'Uh...Shakespeare in the Park? Doth Mother know you weareth her drapes?'}, {'user':users[0], 'message':'This is beyond you, metal man. Loki will face Asgardian justice.'}];
+const message2 = {'user':users[2], 'message':'Dr. Banner! Now might be a good time to get angry.'};
 
 describe('Test db API round trip', () => {
 
@@ -54,16 +54,16 @@ describe('Test db API round trip', () => {
     });
 
     test('dbMembers join test', async () => {
-        let members = '';
+        let roomMembers = '';
         try {
             let request = {'id':newChatId};
             let results = await dbMembers(request);
-            members = results.filter(item => JSON.stringify(item._id).includes(newChatId));
-            console.log(`Members of ${members[0].title} \n ${members[0].users}`);
+            roomMembers = results.filter(item => JSON.stringify(item._id).includes(newChatId));
+            console.log(`Members of ${roomMembers[0].title} \n ${roomMembers[0].users}`);
         } catch (err) {
             console.log(`dbMembers failed`);
         }
-        expect(JSON.stringify(members[0].users)).toBe(JSON.stringify(users.concat([newuser])));
+        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify(users.concat([newuser])));
     });
 
     test('dbLeave test', async () => {
@@ -79,22 +79,22 @@ describe('Test db API round trip', () => {
     });
     
     test('dbMembers leave test', async () => {
-        let members = '';
+        let roomMembers = '';
         try {
             let request = {'id':newChatId};
             let results = await dbMembers(request);
-            members = results.filter(item => JSON.stringify(item._id).includes(newChatId));
-            console.log(`Members of ${members[0].title} \n ${members[0].users}`);
+            roomMembers = results.filter(item => JSON.stringify(item._id).includes(newChatId));
+            console.log(`Members of ${roomMembers[0].title} \n ${roomMembers[0].users}`);
         } catch (err) {
             console.log(`dbMembers failed`);
         }
-        expect(JSON.stringify(members[0].users)).toBe(JSON.stringify(users.filter(user => user !== olduser)));
+        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify(users.filter(user => user !== olduser)));
     });
 
     test('dbUpdate test', async () => {
         let modified = 0;
         try {
-            let request = {'id':newChatId, 'chat':chat};
+            let request = {'id':newChatId, 'chat':message1};
             let results = await dbUpdate(request);
             modified = results.result.n;
         } catch (err) {
@@ -113,13 +113,13 @@ describe('Test db API round trip', () => {
         } catch (err) {
             console.log(`dbChat failed`);
         }
-        expect(newChat).toStrictEqual(chat);
+        expect(newChat).toStrictEqual(message1);
     });
 
     test('dbUpdate concat test', async () => {
         let modified = 0;
         try {
-            let request = {'id':newChatId, 'chat':chat.concat([chat2])};
+            let request = {'id':newChatId, 'chat':message1.concat([message2])};
             let results = await dbUpdate(request);
             modified = results.result.n;
         } catch (err) {
@@ -138,7 +138,7 @@ describe('Test db API round trip', () => {
         } catch (err) {
             console.log(`dbChat failed`);
         }
-        expect(newChat).toStrictEqual(chat.concat([chat2]));
+        expect(newChat).toStrictEqual(message1.concat([message2]));
     });
 
     test('dbDelete test', async () => {

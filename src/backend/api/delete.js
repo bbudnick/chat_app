@@ -16,7 +16,6 @@
 const  { dbDelete } = require('../db');
 
 const del = async (request) => {
-    if (request.title == undefined) { request.title = "This is my test chat room"; }
 
     let result = await dbDelete(request)
     .then((res) => { return res; })

@@ -13,9 +13,16 @@
 *
 */
 
-const  { dbJoin } = require('../db');
+const  { dbJoin, dbChat } = require('../db');
 
 const join = async (request) => {
+    let existing = await dbChat(request)
+    .then((res) => { return res; })
+    .catch((err) => { return console.log('dbChat failed', err) });
+
+    // let newUser = JSON.stringify(request.users);
+    // let existingUsers = JSON.stringify(existing.users);
+    // request.users = existingUsers.concat([newUser]);
 
     let result = await dbJoin(request)
     .then((res) => { return res; })
