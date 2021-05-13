@@ -8,9 +8,10 @@
 import React from 'react';
 
 export function MessageBox(props) {
+   
     return (
-        <div></div>
+        <div>
+        </div>
+
     );
 };
-    
-export default MessageBox; 
