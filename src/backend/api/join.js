@@ -20,11 +20,19 @@ const join = async (request) => {
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbChat failed', err) });
 
-    // let newUser = JSON.stringify(request.users);
-    // let existingUsers = JSON.stringify(existing.users);
-    // request.users = existingUsers.concat([newUser]);
+    let updatedUsers = [];
+    if (existing[0].users) {
+        if (!existing[0].users.includes(request.user)) {
+            updatedUsers = existing[0].users.concat([request.user]);
+        } else {
+            updatedUsers = existing[0].users;
+        }
+    } else {
+        updatedUsers[0] = request.user;
+    }
 
-    let result = await dbJoin(request)
+    let updatedRequest = {'id': request.id, 'users':updatedUsers};
+    let result = await dbJoin(updatedRequest)
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbJoin failed', err) });
 

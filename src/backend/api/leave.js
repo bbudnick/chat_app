@@ -13,11 +13,15 @@
 *
 */
 
-const  { dbLeave } = require('../db');
+const  { dbLeave, dbChat } = require('../db');
 
 const leave = async (request) => {
+    let existing = await dbChat(request)
+    .then((res) => { return res; })
+    .catch((err) => { return console.log('dbChat failed', err) });
 
-    let result = await dbLeave(request)
+    let updatedRequest = {'id': request.id, 'users': existing[0].users.filter(user => user !== request.user)};
+    let result = await dbLeave(updatedRequest)
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbLeave failed', err) });
 

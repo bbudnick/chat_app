@@ -34,12 +34,21 @@
         parameters:
                 JSON payload containing chat room id, b64 encoded file
 
+    apiChat: List chat room contents
+        parameters:
+            JSON payload containing chat room id
+
     apiDeleteAll: Delete all chat rooms
         parameters:
                 None
 
 */
 
+/*
+    @param: JSON object containing
+        {'title': '<chat room title>'}
+      ie {'title': 'Avengers Mansion Conference Room'}
+*/
 export const apiCreate = async (request) => {
     let result = await fetch('/create', {
         headers: {
@@ -59,6 +68,10 @@ export const apiCreate = async (request) => {
     return result;
 };
 
+/*
+    @param: none
+
+*/
 export const apiList = async () => {
     let result = await fetch('/list', {
         headers: {
@@ -76,6 +89,11 @@ export const apiList = async () => {
     return result;
 };
 
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>', 'user': '<new user>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac', 'user': 'Hope Van Dyne'}
+*/
 export const apiJoin = async (request) => {
     let result = await fetch('/join', {
         headers: {
@@ -94,6 +112,11 @@ export const apiJoin = async (request) => {
     return result;
 };
 
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>', 'user': '<existing user>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac', 'user': 'Hope Van Dyne'}
+*/
 export const apiLeave = async (request) => {
     let result = await fetch('/leave', {
         headers: {
@@ -113,6 +136,11 @@ export const apiLeave = async (request) => {
     return result;
 };
 
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac'}
+*/
 export const apiMembers = async (request) => {
     let result = await fetch('/members', {
         headers: {
@@ -132,6 +160,11 @@ export const apiMembers = async (request) => {
     return result;
 };
 
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>', 'chat': '<new chat object (user and message)>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac', 'chat': {'user':'Thor', 'message':'This is beyond you metal man'}}
+*/
 export const apiUpdate = async (request) => {
     let result = await fetch('/update', {
         headers: {
@@ -151,6 +184,34 @@ export const apiUpdate = async (request) => {
     return result;
 };
 
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac'}
+*/
+export const apiDelete = async (request) => {
+    let result = await fetch('/delete', {
+        headers: {
+            'Content-Type': 'application/json'
+        },        
+        method: 'DELETE',
+        body: JSON.stringify(request)
+    })
+    .then(res => {
+        if(res.status >= 300) { throw new Error(res.statusText); }
+        return res.json();
+    })
+    .catch(err => { 
+        console.log(err); 
+    });
+    return result;    
+};
+
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>', 'file': '<b64 encoded string>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac', 'file': 'FjY291bnQuY29tIgp9Cg=='}
+*/
 export const apiFile = async (request) => {
     let result = await fetch('/file', {
         headers: {
@@ -170,6 +231,11 @@ export const apiFile = async (request) => {
     return result;
 };
 
+/*
+    @param: JSON object containing
+        {'id': '<chat room id>'}
+      ie {'id': '6089d8de8dd830d8c259b5ac'}
+*/
 export const apiChat = async (request) => {
     let result = await fetch('/chat', {
         headers: {
@@ -189,24 +255,10 @@ export const apiChat = async (request) => {
     return result;
 };
 
-export const apiDelete = async (request) => {
-    let result = await fetch('/delete', {
-        headers: {
-            'Content-Type': 'application/json'
-        },        
-        method: 'DELETE',
-        body: JSON.stringify(request)
-    })
-    .then(res => {
-        if(res.status >= 300) { throw new Error(res.statusText); }
-        return res.json();
-    })
-    .catch(err => { 
-        console.log(err); 
-    });
-    return result;    
-};
+/*
+    @param: none
 
+*/
 export const apiDeleteAll = async () => {
     let result = await fetch('/deleteAll', {
         headers: {

@@ -45,8 +45,19 @@ describe('Test API round trip', () => {
     test('join test', async () => {
         let modified = 0;
         try {
-            let request = {'id':newChatId, 'users':users.concat([newuser])};
-            // let request = {'id':newChatId, 'users':newuser};
+            let request = {'id':newChatId, 'user':users[0]};
+            let results = await join(request);
+            modified = results.result.n;
+        } catch (err) {
+            console.log(`join failed`);
+        }
+        expect(modified).toBe(1);
+    });
+
+    test('join test', async () => {
+        let modified = 0;
+        try {
+            let request = {'id':newChatId, 'user':newuser};
             let results = await join(request);
             modified = results.result.n;
         } catch (err) {
@@ -65,13 +76,13 @@ describe('Test API round trip', () => {
         } catch (err) {
             console.log(`members failed`);
         }
-        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify(users.concat([newuser])));
+        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify([users[0], newuser]));
     });
 
     test('leave test', async () => {
         let modified = 0;
         try {
-            let request = {'id':newChatId, 'users':users.filter(user => user !== olduser)};
+            let request = {'id':newChatId, 'user':newuser};
             let results = await leave(request);
             modified = results.result.n;
         } catch (err) {
@@ -90,7 +101,7 @@ describe('Test API round trip', () => {
         } catch (err) {
             console.log(`members failed`);
         }
-        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify(users.filter(user => user !== olduser)));
+        expect(JSON.stringify(roomMembers[0].users)).not.toContain(newuser);
     });
 
     test('update test', async () => {
@@ -115,13 +126,13 @@ describe('Test API round trip', () => {
         } catch (err) {
             console.log(`chat failed`);
         }
-        expect(newChat).toStrictEqual(message1);
+        expect(newChat[0]).toStrictEqual(message1);
     });
 
     test('update concat test', async () => {
         let modified = 0;
         try {
-            let request = {'id':newChatId, 'chat':message1.concat([message2])};
+            let request = {'id':newChatId, 'chat':message2};
             let results = await update(request);
             modified = results.result.n;
         } catch (err) {
@@ -140,7 +151,7 @@ describe('Test API round trip', () => {
         } catch (err) {
             console.log(`chat failed`);
         }
-        expect(newChat).toStrictEqual(message1.concat([message2]));
+        expect(newChat).toStrictEqual([message1, message2]);
     });
 
     test('delete test', async () => {
