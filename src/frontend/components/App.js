@@ -19,11 +19,12 @@ class App extends React.Component {
         super(props);
         this.state = {
             chatrooms: [],
-            user: ''
+            user: '',
         };
         /* This would be appropriate for a callback */
         //this.apiList = this.apiList.bind(this)
     };
+
 
     async componentDidMount() {
         //call apiList to list the chatrooms 
@@ -33,15 +34,6 @@ class App extends React.Component {
         Object.keys(currentChatrooms).forEach((key) => {
             arr.push(currentChatrooms[key]);
         });
-        console.log(arr);
-
-
-
-        //send id to api call chatroom 
-        //entire record will be returned 
-
-
-
 
         this.setState({ user: "brita-budnick" });
         this.setState({ version: this.props.version });
@@ -53,14 +45,15 @@ class App extends React.Component {
             <div>
                 <Header />
                 <NavBar />
+                <SideBar data={this.state.chatrooms} />
                 <CurChatRoom />
                 <MessageBox />
-                <SideBar data={this.state.chatrooms} />
                 <Footer />
             </div>
         );
     };
 };
+
 
 
 export default App;
