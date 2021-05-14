@@ -32,14 +32,13 @@ describe('Test API round trip', () => {
     });
 
     test('list test', async () => {
-        let newRoom = '';
+        let results;
         try {
-            let results = await list();
-            newRoom = results.filter(item => JSON.stringify(item._id).includes(newChatId));
+            results = await list();
         } catch (err) {
             console.log(`list failed`);
         }
-        expect(JSON.stringify(newRoom[0]._id)).toBe(JSON.stringify(newChatId));
+        expect(JSON.stringify(results)).toContain(newChatId);
     });
 
     test('join test', async () => {
@@ -67,16 +66,15 @@ describe('Test API round trip', () => {
     });
 
     test('members join test', async () => {
-        let roomMembers = '';
+        let results;
         try {
             let request = {'id':newChatId};
-            let results = await members(request);
-            roomMembers = results.filter(item => JSON.stringify(item._id).includes(newChatId));
-            console.log(`Members of ${roomMembers[0].title} \n ${roomMembers[0].users}`);
+            results = await members(request);
+            console.log(`Members are ${results}`);
         } catch (err) {
             console.log(`members failed`);
         }
-        expect(JSON.stringify(roomMembers[0].users)).toBe(JSON.stringify([users[0], newuser]));
+        expect(results).toStrictEqual([users[0], newuser]);
     });
 
     test('leave test', async () => {
@@ -92,16 +90,14 @@ describe('Test API round trip', () => {
     });
     
     test('members leave test', async () => {
-        let roomMembers = '';
+        let results;
         try {
             let request = {'id':newChatId};
-            let results = await members(request);
-            roomMembers = results.filter(item => JSON.stringify(item._id).includes(newChatId));
-            console.log(`Members of ${roomMembers[0].title} \n ${roomMembers[0].users}`);
+            results = await members(request);
         } catch (err) {
             console.log(`members failed`);
         }
-        expect(JSON.stringify(roomMembers[0].users)).not.toContain(newuser);
+        expect(results).not.toContain(newuser);
     });
 
     test('update test', async () => {
