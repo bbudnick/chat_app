@@ -8,7 +8,9 @@
 import React, { useState } from 'react';
 import { NewChatRoomForm } from './NewChatRoomForm';
 import { DeleteChatRoomForm } from './DeleteChatRoomForm';
-import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+//import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+import { Table } from "react-bootstrap";
+require('bootstrap/dist/css/bootstrap.css');
 
 export function SideBar(props) {
     const [popoverOpen, setPopoverOpen] = useState(false);
@@ -17,21 +19,21 @@ export function SideBar(props) {
     return (
         <div>
             <div className="side">
-                <ul>
-                    {props.data.map(({ _id, title }, index) => <ul key={index}>ID: {_id}, Title: {title}</ul>)}
-                </ul>
-                <div className="side-options">
-                    <Button id="Popover1" type="button">Make a new chat?</Button>
-                    <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
-                        <PopoverBody><NewChatRoomForm /></PopoverBody>
-                    </Popover>
-                </div>
-                <div className="side-options">
-                    <Button id="Popover2" type="button">Delete an existing chat?</Button>
-                    <Popover placement="bottom" isOpen={popoverOpen} target="Popover2" toggle={toggle}>
-                        <PopoverBody><DeleteChatRoomForm /></PopoverBody>
-                    </Popover>
-                </div>
+                <Table CurrentChatRooms>
+                    <thead>
+                        <tr>
+                            <th>Current Chat Rooms</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                {props.data.map(({ _id, title }, index) => <ul key={index}>ID: {_id}, Title: {title}</ul>)}
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+                
             </div>
         </div>
     )

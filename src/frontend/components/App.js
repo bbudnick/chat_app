@@ -5,7 +5,6 @@
 */
 
 import React, { useState } from 'react';
-
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import { MessageBox } from './MessageBox';
@@ -28,6 +27,7 @@ class App extends React.Component {
 
     async componentDidMount() {
         //call apiList to list the chatrooms 
+        //refresh if create new room has been called by child 
         let currentChatrooms = await apiList();
         let arr = [];
         Object.keys(currentChatrooms).forEach((key) => {
