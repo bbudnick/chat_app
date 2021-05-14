@@ -10,10 +10,13 @@ import { NewChatRoomForm } from './NewChatRoomForm';
 import { DeleteChatRoomForm } from './DeleteChatRoomForm';
 import { Table, Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 
+const borderStyle = {
+    border: "1px dashed navy"
+  };
+
 export function SideBar(props) {
     const [popoverOpen, setPopoverOpen] = useState(false);
     const toggle = () => setPopoverOpen(!popoverOpen);
-
 
     return (
         <div>
@@ -26,7 +29,7 @@ export function SideBar(props) {
                     </thead>
                     <tbody>
                         {props.data.map(({ _id, title }, index) =>
-                            <tr>
+                            <tr onClick={() => alert(`I done been clicked`)}>
                                 <td key={index}>
                                     {title}
                                 </td>
@@ -36,5 +39,6 @@ export function SideBar(props) {
                 </Table>
             </div>
         </div>
+
     )
 };
