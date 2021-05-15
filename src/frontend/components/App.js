@@ -20,33 +20,34 @@ class App extends React.Component {
         this.state = {
             chatrooms: [],
             user: '',
+            currentRoom: '',
         };
         /* This would be appropriate for a callback */
-        //this.apiList = this.apiList.bind(this)
+        this.setCurrentRoom = this.setCurrentRoom.bind(this)
     };
 
 
     async componentDidMount() {
         //call apiList to list the chatrooms 
         //refresh if create new room has been called by child 
-        let currentChatrooms = await apiList();
-        let arr = [];
-        Object.keys(currentChatrooms).forEach((key) => {
-            arr.push(currentChatrooms[key]);
-        });
+        let chatrooms = await apiList();
 
         this.setState({ user: "brita-budnick" });
         this.setState({ version: this.props.version });
-        this.setState({ chatrooms: arr });
+        this.setState({ chatrooms: chatrooms });
     };
+
+    setCurrentRoom(room) {
+        this.setState({ currentRoom: room });
+    }
 
     render() {
         return (
             <div>
                 <Header />
                 <NavBar />
-                <SideBar data={this.state.chatrooms} />
-                <CurChatRoom />
+                <SideBar chatrooms={this.state.chatrooms} setCurrentRoom={this.setCurrentRoom}/>
+                <CurChatRoom currentRoom={this.state.currentRoom} />
                 <MessageBox />
                 <Footer />
             </div>

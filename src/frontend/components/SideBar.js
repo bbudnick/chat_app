@@ -15,41 +15,19 @@ const borderStyle = {
 };
 
 export function SideBar(props) {
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    const toggle = () => setDropdownOpen(prevState => !prevState);
 
     return (
+        <aside className="sidebar">
+            <ul className="roomlist">
+                {props.chatrooms.map( room => {
+                    return <li key={room.id}>
+                        <a onClick={ () => props.setCurrentRoom(room.id) } href="#">
+                        {room.title}
+                        </a>
+                    </li>    
+                })}
 
-        <div>
-            <div className="side">
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>Current Chat Rooms</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {props.data.map(({ _id, title }, index) =>
-                            <tr key={index}>
-                                {title}
-                            </tr>
-                        )}
-                        <tr>
-                            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
-                                <DropdownToggle caret>
-                                    Chatroom Options
-                                        </DropdownToggle>
-                                <DropdownMenu>
-                                    <DropdownItem>Join?</DropdownItem>
-                                    <DropdownItem>Delete?</DropdownItem>
-                                </DropdownMenu>
-                            </Dropdown>
-                        </tr>
-                    </tbody>
-                </Table>
-            </div>
-        </div>
-
+            </ul>
+        </aside>
     )
 };
