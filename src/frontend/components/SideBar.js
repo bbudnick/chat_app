@@ -8,17 +8,19 @@
 import React, { useState } from 'react';
 import { NewChatRoomForm } from './NewChatRoomForm';
 import { DeleteChatRoomForm } from './DeleteChatRoomForm';
-import { Table, Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+import { Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 const borderStyle = {
     border: "1px dashed navy"
-  };
+};
 
 export function SideBar(props) {
-    const [popoverOpen, setPopoverOpen] = useState(false);
-    const toggle = () => setPopoverOpen(!popoverOpen);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+    const toggle = () => setDropdownOpen(prevState => !prevState);
 
     return (
+
         <div>
             <div className="side">
                 <Table>
@@ -29,12 +31,21 @@ export function SideBar(props) {
                     </thead>
                     <tbody>
                         {props.data.map(({ _id, title }, index) =>
-                            <tr onClick={() => alert(`I done been clicked`)}>
-                                <td key={index}>
-                                    {title}
-                                </td>
+                            <tr key={index}>
+                                {title}
                             </tr>
                         )}
+                        <tr>
+                            <Dropdown isOpen={dropdownOpen} toggle={toggle}>
+                                <DropdownToggle caret>
+                                    Chatroom Options
+                                        </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem>Join?</DropdownItem>
+                                    <DropdownItem>Delete?</DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </tr>
                     </tbody>
                 </Table>
             </div>
