@@ -50,8 +50,8 @@ dbClient()
 let dbCreate = async (request) => {
     const client = await dbClient();
     const col = await dbCol(client);
-    const {users, title, chat} = request;
-    let newRec = { 'users': users, 'title': title, 'chat': chat };
+    const {title} = request;
+    let newRec = { 'title': title };
     let results = await col.insertOne(newRec)
         .then((res) => {return res; })
         .catch((err) => { console.log('DB insertOne failed', err); });
@@ -63,7 +63,7 @@ let dbCreate = async (request) => {
 let dbList = async () => {
     const client = await dbClient();
     const col = await dbCol(client);
-    let results = await col.find({}).toArray()  // TBD only return title
+    let results = await col.find({}).toArray() 
         .then((res) => {return res; })
         .catch((err) => { console.log('DB find all failed', err); });
     client.close();
@@ -76,7 +76,7 @@ let dbJoin = async (request) => {
     const col = await dbCol(client);
     const {id, users} = request;
     let oid = new mongodb.ObjectID(id);
-    let results = await col.updateOne({ '_id' : oid}, { $set: {'users': users}}) // TBD try a users+myuser
+    let results = await col.updateOne({ '_id' : oid}, { $set: {'users': users}}) 
         .then((res) => {return res; })
         .catch((err) => { console.log('DB updateOne failed', err); });
     client.close();
@@ -89,7 +89,7 @@ let dbLeave = async (request) => {
     const col = await dbCol(client);
     const {id, users} = request;
     let oid = new mongodb.ObjectID(id);
-    let results = await col.updateOne({ '_id' : oid}, { $set: {'users': users}}) // TBD try a users-myuser
+    let results = await col.updateOne({ '_id' : oid}, { $set: {'users': users}}) 
         .then((res) => {return res; })
         .catch((err) => { console.log('DB updateOne failed', err); });
     client.close();
@@ -102,7 +102,7 @@ let dbMembers = async (request) => {
     const col = await dbCol(client);
     const {id} = request;
     let oid = new mongodb.ObjectID(id);
-    let results = await col.find({ '_id': oid}).toArray() // TBD return only users
+    let results = await col.find({ '_id': oid}).toArray() 
         .then((res) => {return res; })
         .catch((err) => { console.log('DB find from id failed', err); });
     client.close();
@@ -141,7 +141,7 @@ let dbFile = async (request) => {
     const col = await dbCol(client);
     const {id, file} = request;
     let oid = new mongodb.ObjectID(id);
-    let results = await col.updateOne({ '_id' : oid}, { $set: {'files': file}}) // TBD b64 encode or user bson
+    let results = await col.updateOne({ '_id' : oid}, { $set: {'files': file}}) 
         .then((res) => {return res; })
         .catch((err) => { console.log('DB updateOne failed', err); });
     client.close();
@@ -154,7 +154,7 @@ let dbChat = async (request) => {
     const col = await dbCol(client);
     const {id} = request;
     let oid = new mongodb.ObjectID(id);
-    let results = await col.find({ '_id': oid}).toArray() // TBD return only chat
+    let results = await col.find({ '_id': oid}).toArray() 
         .then((res) => {return res; })
         .catch((err) => { console.log('DB find from id failed', err); });
     client.close();

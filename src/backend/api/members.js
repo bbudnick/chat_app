@@ -21,7 +21,7 @@ const members = async (request) => {
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbMembers failed', err) });
 
-    return result;
-};
+    return result[0].users;
+}
 
 module.exports = members;

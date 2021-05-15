@@ -13,11 +13,23 @@
 *
 */
 
-const  { dbUpdate } = require('../db');
+const  { dbUpdate, dbChat } = require('../db');
 
 const update = async (request) => {
+    let existing = await dbChat(request)
+    .then((res) => { return res; })
+    .catch((err) => { return console.log('dbChat failed', err) });
 
-    let result = await dbUpdate(request)
+    let updatedChat = [];
+    if (existing[0].chat) {
+        updatedChat = existing[0].chat.concat([request.chat]);
+    } else {
+        updatedChat[0] = request.chat;
+    }
+
+    let updatedRequest = {'id': request.id, 'chat': updatedChat };
+    console.log(`updated request ${JSON.stringify(updatedRequest)}`);
+    let result = await dbUpdate(updatedRequest)
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbUpdate failed', err) });
 
