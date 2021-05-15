@@ -21,7 +21,7 @@ export function SideBar(props) {
             <ul className="roomlist">
                 {props.chatrooms.map( room => {
                     return <li key={room.id}>
-                        <a onClick={ () => props.setCurrentRoom(room.id) } href="#">
+                        <a onClick={ () => props.setCurrentRoomId(room.id) } href="#">
                         {room.title}
                         </a>
                     </li>    

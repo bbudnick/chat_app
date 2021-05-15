@@ -11,7 +11,7 @@ import { MessageBox } from './MessageBox';
 import { SideBar } from './SideBar';
 import { Footer } from './Footer';
 import { Loader } from "react-loader-spinner";
-import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll } from './Api';
+import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 
 class App extends React.Component {
@@ -20,12 +20,13 @@ class App extends React.Component {
         this.state = {
             chatrooms: [],
             user: '',
-            currentRoom: '',
+            currentRoomId: '',
+            currentRoom: [],
+
         };
         /* This would be appropriate for a callback */
-        this.setCurrentRoom = this.setCurrentRoom.bind(this)
+        this.setCurrentRoomId = this.setCurrentRoomId.bind(this)
     };
-
 
     async componentDidMount() {
         //call apiList to list the chatrooms 
@@ -37,8 +38,13 @@ class App extends React.Component {
         this.setState({ chatrooms: chatrooms });
     };
 
-    setCurrentRoom(room) {
-        this.setState({ currentRoom: room });
+    async setCurrentRoomId(roomId) {
+        this.setState({ currentRoomId: roomId });
+        let request = {'id': this.state.currentRoomId};
+        let currentRoom = await apiChat(request);
+        this.setState({ currentRoom: currentRoom });
+        console.log(`current room ID: ${this.state.currentRoomId}`);
+        console.log(`current room: ${JSON.stringify(this.state.currentRoom)}`);
     }
 
     render() {
@@ -46,7 +52,7 @@ class App extends React.Component {
             <div>
                 <Header />
                 <NavBar />
-                <SideBar chatrooms={this.state.chatrooms} setCurrentRoom={this.setCurrentRoom}/>
+                <SideBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
                 <CurChatRoom currentRoom={this.state.currentRoom} />
                 <MessageBox />
                 <Footer />
