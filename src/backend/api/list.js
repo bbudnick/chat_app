@@ -21,7 +21,7 @@ const list = async () => {
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbList failed', err) });
 
-    return result;
+    return result.map( item => { return {'id':item._id, 'title':item.title}; });
 };
 
 module.exports = list;
