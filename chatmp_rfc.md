@@ -3,14 +3,14 @@
 | Status        | Proposed       |
 :-------------- |:---------------------------------------------------- |
 | **RFC #**     | TBD |
-| **Author(s)** | Brita Budnick and Michael Howard |
+| **Authors**   | Brita Budnick and Michael Howard |
 | **Sponsor**   | Dr Niru Bulusu |
 | **Updated**   | 2021-05-18 |
 | **Obsoletes** | None  |
 
 ## Objective
 
-The objective of the ChatMP protocol is to provide a predetermine API to form all necessary messages needed internet relay chat. It is to take advantage of the HTTP(s) structure for messaging as well as the TCP packet transmission guarantees.
+The objective of the ChatMP protocol is to provide a predetermined API to form all necessary messages needed for internet relay chat. This application takes advantage of the HTTP(s) structure for messaging as well as the TCP packet transmission guarantees.
 
 ## Motivation
 
@@ -18,7 +18,7 @@ Developing a chat client/server application can be simplified if the communincat
 
 ## User Benefit
 
-As a developer, both client and server chat applications and be designed to send and listen to ChatMP messages.  The details are encapsulated in the protocol and can flexibly support multiple client/server programming languages and environments.
+As a developer, both client and server chat applications can be designed to send and listen to ChatMP messages.  The details are encapsulated in the protocol and can flexibly support multiple client/server programming languages and environments.
 
 ## Design Proposal
 
@@ -101,24 +101,24 @@ The ChatMP API messages are as follows:
 * All code that implements this protocol is maintained by the developers of FelixChat.
 
 ### Platforms and Environments
-* Platforms: Any client/server environment that supports HTTP can be used to implement the client/server that use the ChatMP protocol.  However, the FelixChat team felt that a Node.js backend and a React.js web frontend were the most efficient and mainstream implementations that provided for easy scaling and future advances.
+* Platforms: Any client/server environment that supports HTTP can be used to implement the client/server that uses the ChatMP protocol.  However, the FelixChat team felt that a Node.js backend and a React.js web frontend were the most efficient and mainstream implementations that provided for easy scaling and future advances.
 * Execution environments are independent of the ChatMP protocol.  The FelixChat application was hosted in Google Cloud Platform within a Google Kubernetes Engine cluster.
 
 ### Best Practices
 * The DeleteAll API should be hidden from the end user.
-* For the FelixChat client/server, all code is build into a container and deployed into a Kubernetes cluster.  This occurs through an automated CI/CD pipeline hosted through GitHub Actions.
+* For the FelixChat client/server, all code is built into a container and deployed into a Kubernetes cluster.  This occurs through an automated CI/CD pipeline hosted through GitHub Actions.
 * All client/server code should have full unit test coverage via Jest and be run in an automated fashion via the CI/CD pipeline. 
 
 ### Tutorials and Examples
 * Full source code is hosted at https://github.com/zemar/cs594-project
 
 ### Compatibility
-* At version 1.0, there are no present compatibility concerns
+* At version 1.0 there are no present compatibility concerns
 * All HTTP methods are compatible with HTTP v1.1.  If these are modified/deprecated, the protocol will need to adapt.
 * The FelixChat server is implemented with Node.js that contains 3rd party NPM packages.  Version compatibility of these packages over time will be a concern.
 
 ### User Impact
-* The biggest user facing challenge will be multiple users within a chat room and connections across multiple rooms.  This will be handled as part of the development process of the client/server application and be independent of the ChatMP protocol.
+* The biggest user-facing challenge will be multiple users within a chat room and connections across multiple rooms.  This will be handled as part of the development process of the client/server application and be independent of the ChatMP protocol.
 
 ## Detailed Design
 
