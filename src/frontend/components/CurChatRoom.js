@@ -11,8 +11,8 @@ export function CurChatRoom(props) {
     let title = '';
     let chat = [];
     if (props.currentRoom !== undefined) {
-        title = props.currentRoom.map( item => {return item.title;} );
-        chat = props.currentRoom.map( item => {return item.chat;} );
+        title = props.currentRoom.map( (item, i) => {return {key: i}, item.title;} );
+        chat = props.currentRoom.map( (item, i) => {return item.chat;} );
      } else {
          title = "Title not yet defined";
      }
@@ -21,8 +21,8 @@ export function CurChatRoom(props) {
         <div className="curchatroom">
             <h2>{title}</h2>
             <ul className="chat">
-            {chat.map( item => { 
-                        return <li>
+            {chat.map( (item, i) => { 
+                        return <li key={i}>
                             user:{item.user} message:{item.message}
                         </li>
                         }
