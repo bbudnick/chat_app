@@ -7,7 +7,9 @@ export function NewChatRoomForm(props) {
     const handleSubmit = (evt) => {
         evt.preventDefault();
         //append new chatroom title to list of chatrooms
-        // TODO add api call 
+        //payload should be JSON object, pass as title property 
+        apiCreate();
+
         alert(`Creating new chatroom ${name}`)
     }
     return (

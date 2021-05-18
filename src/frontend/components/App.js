@@ -5,14 +5,13 @@
 */
 
 import React, { useState } from 'react';
-
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import { MessageBox } from './MessageBox';
 import { SideBar } from './SideBar';
 import { Footer } from './Footer';
 import { Loader } from "react-loader-spinner";
-import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll } from './Api';
+import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 
 class App extends React.Component {
@@ -20,47 +19,48 @@ class App extends React.Component {
         super(props);
         this.state = {
             chatrooms: [],
-            user: ''
+            user: '',
+            currentRoomId: '',
+            currentRoom: [],
+
         };
         /* This would be appropriate for a callback */
-        //this.apiList = this.apiList.bind(this)
+        this.setCurrentRoomId = this.setCurrentRoomId.bind(this)
     };
 
     async componentDidMount() {
         //call apiList to list the chatrooms 
-        let currentChatrooms = await apiList();
-        let arr = [];
-        Object.keys(currentChatrooms).forEach((key) => {
-            arr.push(currentChatrooms[key]);
-        });
-        console.log(arr);
-
-
-
-        //send id to api call chatroom 
-        //entire record will be returned 
-
-
-
+        //refresh if create new room has been called by child 
+        let chatrooms = await apiList();
 
         this.setState({ user: "brita-budnick" });
         this.setState({ version: this.props.version });
-        this.setState({ chatrooms: arr });
+        this.setState({ chatrooms: chatrooms });
     };
+
+    async setCurrentRoomId(roomId) {
+        this.setState({ currentRoomId: roomId });
+        let request = {'id': this.state.currentRoomId};
+        let currentRoom = await apiChat(request);
+        this.setState({ currentRoom: currentRoom });
+        console.log(`current room ID: ${this.state.currentRoomId}`);
+        console.log(`current room: ${JSON.stringify(this.state.currentRoom)}`);
+    }
 
     render() {
         return (
             <div>
                 <Header />
                 <NavBar />
-                <CurChatRoom />
+                <SideBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
+                <CurChatRoom currentRoom={this.state.currentRoom} />
                 <MessageBox />
-                <SideBar data={this.state.chatrooms} />
                 <Footer />
             </div>
         );
     };
 };
+
 
 
 export default App;

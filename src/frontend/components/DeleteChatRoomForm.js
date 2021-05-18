@@ -10,10 +10,16 @@ export function DeleteChatRoomForm(props) {
         let chatRoomCheck = apiList(name);
         if (chatRoomCheck == true) {
             //Delete chatroom from list of existing chatrooms
+            //Delete depending on id
+            //{"id: "}
+            //it'll fail if it already exists 
+            //check that route status code returns correct value 
+
             apiDelete(name);
             alert(`Deleting chatroom ${name}`)
         }
         else
+            //if not 200
             alert(`Unable to delete ${name}, does not exist`)
     }
     return (
