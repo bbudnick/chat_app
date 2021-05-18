@@ -10,10 +10,6 @@ import { NewChatRoomForm } from './NewChatRoomForm';
 import { DeleteChatRoomForm } from './DeleteChatRoomForm';
 import { Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
-const borderStyle = {
-    border: "1px dashed navy"
-};
-
 export function SideBar(props) {
 
     return (
