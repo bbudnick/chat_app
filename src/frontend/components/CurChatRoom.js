@@ -29,7 +29,6 @@ export function CurChatRoom(props) {
                     </li>
                 })}
             </ul>
-            <MessageBox currentRoom={props.currentRoom} />
         </div>
     );
 };

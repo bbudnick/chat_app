@@ -9,7 +9,7 @@ import React, { useState } from 'react';
 import { apiUpdate } from './Api';
 
 export function MessageBox(props) {
-    const [name, setName] = useState("");
+    const [message, setMessage] = useState("");
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -17,7 +17,7 @@ export function MessageBox(props) {
             "id": "60a47a05ff14ce15d6ba7bd7",
             "chat": {
                 "user": "Hankie",
-                "message": "Always hungry."
+                "message": message
             }
         }
         apiUpdate(incomingMessage);
@@ -26,13 +26,16 @@ export function MessageBox(props) {
     return (
         <form onSubmit={handleSubmit}>
             <label>
+                New message: 
                 <input
                     type="text"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
                 />
             </label>
             <input type="submit" value="Submit" />
         </form>
+
+
     );
 }
