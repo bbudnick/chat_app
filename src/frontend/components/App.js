@@ -51,7 +51,7 @@ class App extends React.Component {
         return (
             <div>
                 <Header />
-                <NavBar />
+                <NavBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
                 <SideBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
                 <CurChatRoom currentRoom={this.state.currentRoom} />
                 <MessageBox />

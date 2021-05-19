@@ -10,9 +10,11 @@ export function CurChatRoom(props) {
     console.log(`chatRoom: ${JSON.stringify(props.currentRoom)}`);
     let title = '';
     let chat = [];
+    let user = '';
     if (props.currentRoom !== undefined) {
         title = props.currentRoom.map( (item, i) => {return {key: i}, item.title;} );
-        chat = props.currentRoom.map( (item, i) => {return item.chat;} );
+        chat = props.currentRoom.map( (item, i) => {return {key: i}, item.chat;} );
+        user = props.currentRoom.map( (item, i) => {return {key: i}, item.user;} );
      } else {
          title = "Title not yet defined";
      }

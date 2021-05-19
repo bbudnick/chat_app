@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 import { NewChatRoomForm } from './NewChatRoomForm';
 import { DeleteChatRoomForm } from './DeleteChatRoomForm';
+import { CurChatRoom } from './CurChatRoom';
 import { Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
 export function SideBar(props) {
