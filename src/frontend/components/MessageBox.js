@@ -5,13 +5,34 @@
     The onChange event passes text up to the parent component for handling. 
 */
 
-import React from 'react';
+import React, { useState } from 'react';
+import { apiUpdate } from './Api';
 
 export function MessageBox(props) {
-   
-    return (
-        <div>
-        </div>
+    const [name, setName] = useState("");
 
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+        let incomingMessage = {
+            "id": "60a47a05ff14ce15d6ba7bd7",
+            "chat": {
+                "user": "Hankie",
+                "message": "Always hungry."
+            }
+        }
+        apiUpdate(incomingMessage);
+
+    }
+    return (
+        <form onSubmit={handleSubmit}>
+            <label>
+                <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                />
+            </label>
+            <input type="submit" value="Submit" />
+        </form>
     );
-};
+}

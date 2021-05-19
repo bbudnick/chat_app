@@ -7,12 +7,11 @@
 import React, { useState } from 'react';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
-import { MessageBox } from './MessageBox';
 import { SideBar } from './SideBar';
 import { Footer } from './Footer';
-import { Loader } from "react-loader-spinner";
 import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
+import { MessageBox } from './MessageBox';
 
 class App extends React.Component {
     constructor(props) {
@@ -54,7 +53,7 @@ class App extends React.Component {
                 <NavBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
                 <SideBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
                 <CurChatRoom currentRoom={this.state.currentRoom} />
-                <MessageBox />
+                <MessageBox currentRoom={this.state.currentRoom} />
                 <Footer />
             </div>
         );
