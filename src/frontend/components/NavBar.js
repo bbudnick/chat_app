@@ -3,13 +3,14 @@
 */
 
 import React from 'react';
+import { NewChatRoomForm } from './NewChatRoomForm';
+
 
 export function NavBar() {
+
     return (
         <div className="navbar">
-            <a href="#" className="active">Home</a>
-            <a href="#">Link</a>
-            <a href="#">Link</a>
+            <a href="#" className="active"><NewChatRoomForm/></a>
             <a href="#" className="right">Link</a>
         </div>
 
