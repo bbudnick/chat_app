@@ -12,10 +12,10 @@
 
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { apiJoin } from './Api';
+import { apiDelete, apiJoin } from './Api';
 
 let LineItem = (props) => {
-    function handleClick(e) {
+    function handleClickJoin(e) {
         e.preventDefault();
         alert(`You clicked chat id` + `${props.id}`);
         let currentID = props.id;
@@ -29,20 +29,31 @@ let LineItem = (props) => {
         else
             alert(`You have joined`)
     }
+
+    function handleClickDelete(e) {
+        e.preventDefault();
+        alert(`You clicked chat id` + `${props.id}`);
+        let currentID = props.id;
+        let testUser = {
+            "id": currentID,
+        }
+        let result = apiDelete(testUser)
+        if (result >= 300)
+            alert(`No can do `)
+        else
+            alert(`Chatroom deleted`)
+    }
+
     return (
         <ul>
-            <a href="#" onClick={handleClick}>
-                {props.value}
-            </a>
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    Dropdown Button
+                    {props.value}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+                    <Dropdown.Item href="#" onClick={handleClickJoin}>Join</Dropdown.Item>
+                    <Dropdown.Item href="#" onClick={handleClickDelete}>Delete</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </ul>
