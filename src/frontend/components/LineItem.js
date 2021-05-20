@@ -12,7 +12,7 @@
 
 import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { apiDelete, apiJoin } from './Api';
+import { apiDelete, apiJoin, apiList } from './Api';
 
 let LineItem = (props) => {
     function handleClickJoin(e) {
@@ -40,8 +40,9 @@ let LineItem = (props) => {
         let result = apiDelete(testUser)
         if (result >= 300)
             alert(`No can do `)
-        else
+        else {
             alert(`Chatroom deleted`)
+        }
     }
 
     return (

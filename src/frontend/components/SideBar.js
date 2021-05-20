@@ -16,6 +16,7 @@
 
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NewChatRoomForm } from './NewChatRoomForm';
 import { DeleteChatRoomForm } from './DeleteChatRoomForm';
 import { CurChatRoom } from './CurChatRoom';
@@ -33,5 +34,9 @@ let SideBar = (props) => {
         </aside>
     )
 };
+
+SideBar.propTypes = {
+    chatrooms: PropTypes.array.isRequired,
+}
 
 export default SideBar;

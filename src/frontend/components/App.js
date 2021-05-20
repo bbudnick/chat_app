@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
@@ -20,25 +21,14 @@ class App extends React.Component {
         this.state = {
             chatrooms: [],
             user: '',
-            currentRoomId: '',
             currentRoom: [],
         };
     };
 
-    // Invoked immediately after rendering
-    // componentDidUpdate = async(props) => {
-    //     if (props.chatrooms !== this.props.chatrooms) {
-    //         await this.setState({ chatrooms: this.props.chatrooms})
-    //     }
-    //     if(props.currentRoomId !== this.props.currentRoomId) {
-    //         await this.setState({ currentRoomId: this.props.currentRoomId})
-    //     }
-    // }
-
     // Invoked immediately
     componentDidMount = async () => {
-        let chatrooms = await apiList(); 
-        this.setState({ chatrooms : chatrooms });
+        let chatrooms = await apiList();
+        this.setState({ chatrooms: chatrooms });
     };
 
 
@@ -46,11 +36,11 @@ class App extends React.Component {
     render() {
         return (
             <div>
-               <Header />
+                <Header />
                 <NavBar />
-                <SideBar chatrooms={this.state.chatrooms}  />
+                <SideBar chatrooms={this.state.chatrooms}/>
                 {/* <CurChatRoom  /> */}
-                <MessageBox  />
+                <MessageBox />
                 <Footer />
             </div>
         );
