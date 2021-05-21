@@ -5,6 +5,7 @@
 */
 
 import React from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
@@ -14,39 +15,31 @@ import { apiList, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
+const App = () => {
 
-        this.state = {
-            chatrooms: [],
-            user: '',
-            currentRoom: [],
-        };
-    };
+    //[reactive value, setter]
+    const [list, setList] = useState([]);
 
-    // Invoked immediately
-    componentDidMount = async () => {
-        let chatrooms = await apiList();
-        this.setState({ chatrooms: chatrooms });
-    };
+    useEffect( async () => {
+        setList( await apiList());
+    }, [list])
+
+    console.log(JSON.stringify(`${list}`))
 
 
+    return (
+        <div>
+            <Header />
+            <SideBar chatrooms={list}></SideBar>
 
-    render() {
-        return (
-            <div>
-                <Header />
-                <NavBar />
-                <SideBar chatrooms={this.state.chatrooms}/>
-                {/* <CurChatRoom  /> */}
-                <MessageBox />
-                <Footer />
-            </div>
-        );
-    };
+
+            {/* 
+            <NavBar />
+            <CurChatRoom />
+            <MessageBox />
+            <Footer /> */}
+        </div>
+    );
 };
-
-
 
 export default App;
