@@ -6,7 +6,7 @@ export function JoinChatRoom(props) {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        let joinRoom = {"id": "609ef4f5264d6e3141c2a8cc", "user": "Hankie"};
+        let joinRoom = {"id": "60a8330f22818ba568fbfd0e", "user": "Hankie"};
         apiJoin(joinRoom);
     }
        

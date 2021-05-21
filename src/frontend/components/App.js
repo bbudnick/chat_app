@@ -19,10 +19,11 @@ const App = () => {
 
     //[reactive value, setter]
     const [list, setList] = useState([]);
+    const [currentList, setCurrentList] = useState([]);
 
     useEffect( async () => {
         setList( await apiList());
-    }, [list])
+    }, [currentList])
 
     console.log(JSON.stringify(`${list}`))
 
