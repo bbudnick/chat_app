@@ -5,29 +5,28 @@
 import React, { useState } from 'react';
 import logo from '../styles/logo.png';
 
-export function Header(props) {
-    const [username, setUserName] = useState("");
+const Header = ({ userUpdate }) => {
+    const [userName, setUserName] = useState("");
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        alert(`Great! Your chat user name is ${username}`);
-        return username; 
-    }
     return (
         <div className="header">
             <h1>Welcome to FelixChat</h1>
             <img className="header-avatar" src={logo} alt="Felix the cat"></img>
-            <form onSubmit={handleSubmit}>
-            <label>
-            Please declare your username:
-                        <input
-                    type="text"
-                    value={username}
-                    onChange={e => setUserName(e.target.value)}
-                />
-            </label>
-            <input type="submit" value="Submit" />
-        </form>
+            <form onSubmit={() => userUpdate(userName)}>
+                <label>
+                    Please declare your username:
+                <input
+                        placeholder="username"
+                        required="required"
+                        type="text"
+                        onChange={e => setUserName(e.target.value)}
+                        value={userName}
+                    />
+                </label>
+                <button type="submit">submit</button>
+            </form>
         </div>
     );
 };
+
+export default Header;

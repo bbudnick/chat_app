@@ -5,8 +5,9 @@
 */
 
 import React from 'react';
+import globalHook from 'use-global-hook';
 import { useEffect, useState } from 'react';
-import { Header } from './Header';
+import Header from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
 import { Footer } from './Footer';
@@ -18,15 +19,17 @@ const App = () => {
 
     //[reactive value, setter]
     const [list, setList] = useState([]);
-    const [username, setUsername] = useState([]);
+    const [user, setUser] = useState(null);
 
+    //provide list as dependency so that change in list is tracked
+    //and useEffect is run when list changes 
     useEffect(async () => {
         setList(await apiList());
     }, [list])
-    
-      return (
+
+    return (
         <div>
-            <Header username={username}/>
+            <Header userUpdate={username => setUser(username)}/>
             <SideBar chatrooms={list}></SideBar>
             {/* <NavBar /> */}
 

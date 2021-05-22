@@ -11,10 +11,8 @@
 
 
 import React from 'react';
-import { useEffect, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { apiDelete, apiJoin, apiList } from './Api';
-import DeleteChatRoom from './DeleteChatRoom';
+import { apiDelete, apiJoin } from './Api';
 
 let LineItem = (props) => {
 
