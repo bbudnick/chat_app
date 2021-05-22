@@ -18,6 +18,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LineItem from './LineItem';
+import { NewChatRoomForm } from './NewChatRoomForm';
 
 let SideBar = (props) => {
     const lineItem = props.chatrooms.map(({ id, title }, index) =>
@@ -27,6 +28,7 @@ let SideBar = (props) => {
     return (
         <aside>
             {lineItem}
+            <NewChatRoomForm />
         </aside>
     )
 };

@@ -18,19 +18,17 @@ const App = () => {
 
     //[reactive value, setter]
     const [list, setList] = useState([]);
+    const [username, setUsername] = useState([]);
 
     useEffect(async () => {
         setList(await apiList());
     }, [list])
-
-    console.log(JSON.stringify(`${list}`))
-
-
-    return (
+    
+      return (
         <div>
-            <Header />
+            <Header username={username}/>
             <SideBar chatrooms={list}></SideBar>
-            <NavBar />
+            {/* <NavBar /> */}
 
 
             {/* 

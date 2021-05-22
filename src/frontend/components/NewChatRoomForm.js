@@ -7,6 +7,7 @@
     ID for that new chatroom. 
 
     State holds the user's input which is consistent with the React docs:
+    https://reactjs.org/docs/forms.html
 
 */
 
@@ -27,7 +28,7 @@ export function NewChatRoomForm() {
     return (
         <form onSubmit={handleSubmit}>
             <label>
-                Name of new chatroom:
+               Create a new chatroom? 
             <input
                     type="text"
                     value={name}
