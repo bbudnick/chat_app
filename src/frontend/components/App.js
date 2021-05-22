@@ -29,7 +29,7 @@ const App = () => {
     //and useEffect is run when list changes 
     useEffect(async () => {
         setList(await apiList());
-    }, [])
+    }, [list])
 
     const handleSubmit = (evt) => {
         evt.preventDefault(); 

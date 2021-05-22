@@ -23,17 +23,18 @@ let LineItem = (props) => {
 
     function handleClickJoin(e) {
         e.preventDefault();
-        alert(`Thanks for joining, ${user}`);
         let currentID = props.id;
         let testUser = {
             "id": currentID,
             "user": `${user}`
         }
         let result = apiJoin(testUser)
-        if (result >= 300)
-            alert(`No can do `)
-        else
-            alert(`You have joined`)
+        if (!`${user}`)
+            alert(`Please provide your username before joining.`)
+        else if (result >= 300)
+            alert(`Join API not currently available`)
+        else if (`${user}`)
+            alert(`Thanks for joining, ${user}`);
     }
 
     function handleClickDelete(e) {
@@ -48,28 +49,27 @@ let LineItem = (props) => {
             alert(`No can do `)
         else {
             alert(`Chatroom deleted`)
-            
+
         }
     }
 
-return (
-    <ul>
-        <div>The username is {user}.</div>
-        <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                {props.value}
-            </Dropdown.Toggle>
+    return (
+        <ul>
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    {props.value}
+                </Dropdown.Toggle>
 
-            <Dropdown.Menu>
-                <Dropdown.Item href="#" onClick={handleClickJoin}>Join</Dropdown.Item>
-                <Dropdown.Item href="#" onClick={handleClickDelete}>Delete</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown>
-    </ul>
-
+                <Dropdown.Menu>
+                    <Dropdown.Item href="#" onClick={handleClickJoin}>Join</Dropdown.Item>
+                    <Dropdown.Item href="#" onClick={handleClickDelete}>Delete</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </ul>
 
 
-)
+
+    )
 }
 
 
