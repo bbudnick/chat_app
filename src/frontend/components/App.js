@@ -6,7 +6,6 @@
 
 import React from 'react';
 import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Header } from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
@@ -19,11 +18,10 @@ const App = () => {
 
     //[reactive value, setter]
     const [list, setList] = useState([]);
-    const [currentList, setCurrentList] = useState([]);
 
-    useEffect( async () => {
-        setList( await apiList());
-    }, [currentList])
+    useEffect(async () => {
+        setList(await apiList());
+    }, [list])
 
     console.log(JSON.stringify(`${list}`))
 
@@ -32,10 +30,10 @@ const App = () => {
         <div>
             <Header />
             <SideBar chatrooms={list}></SideBar>
+            <NavBar />
 
 
             {/* 
-            <NavBar />
             <CurChatRoom />
             <MessageBox />
             <Footer /> */}

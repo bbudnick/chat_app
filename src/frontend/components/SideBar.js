@@ -17,10 +17,6 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NewChatRoomForm } from './NewChatRoomForm';
-import { DeleteChatRoomForm } from './DeleteChatRoomForm';
-import { CurChatRoom } from './CurChatRoom';
-import { Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 import LineItem from './LineItem';
 
 let SideBar = (props) => {
