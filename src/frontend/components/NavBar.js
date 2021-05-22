@@ -3,7 +3,6 @@
 */
 
 import React, { useState } from 'react';
-import { JoinChatRoom } from './JoinChatRoom'
 import { LeaveChatRoom } from './LeaveChatRoom'
 import { NewChatRoomForm } from './NewChatRoomForm';
 

@@ -5,7 +5,6 @@
 */
 
 import React from 'react';
-import globalHook from 'use-global-hook';
 import { useEffect, useState } from 'react';
 import Header from './Header';
 import { NavBar } from './NavBar';
@@ -15,31 +14,61 @@ import { apiList, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
 
+const userObj = {
+    user: "default"
+}
+export const UserContext = React.createContext(userObj);
+
 const App = () => {
 
     //[reactive value, setter]
     const [list, setList] = useState([]);
-    const [user, setUser] = useState(null);
+    const [userName, setUserName] = useState("");
 
     //provide list as dependency so that change in list is tracked
     //and useEffect is run when list changes 
     useEffect(async () => {
         setList(await apiList());
-    }, [list])
+    }, [])
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault(); 
+        userObj.user = userName; 
+        alert(`Your username is now ${userName}`);
+    }
 
     return (
-        <div>
-            <Header userUpdate={username => setUser(username)}/>
-            <SideBar chatrooms={list}></SideBar>
-            {/* <NavBar /> */}
+        <UserContext.Provider value={userName}>
+            <div>
+                <Header />
+                <form onSubmit={handleSubmit}>
+                <label>
+                    Please declare your username:
+                <input
+                        placeholder="username"
+                        required="required"
+                        type="text"
+                        onChange={e => setUserName(e.target.value)}
+                        value={userName}
+                    />
+                </label>
+                <button type="submit">submit</button>
+            </form>
+                <SideBar chatrooms={list} />
+            </div>
+        </UserContext.Provider>
 
-
-            {/* 
-            <CurChatRoom />
-            <MessageBox />
-            <Footer /> */}
-        </div>
     );
 };
 
+
 export default App;
+
+{/* <NavBar /> */ }
+
+
+{/* 
+            <CurChatRoom />
+            <MessageBox />
+            <Footer /> */}
+

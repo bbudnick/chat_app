@@ -3,28 +3,31 @@
     a chatroom, depending on the user's choice. 
 
     The ID of the chatroom the user clicks is passed as a JSON object
-    in the parameters of the apiJoin or apiDelete function. 
+    in the parameters of the apiJoin or apiDelete function.
+    
+    Because user is from the global context, to avoid prop drilling, the UserContext
+    is imported from App.js. 
 
 
 */
 
 
 
-import React from 'react';
+import React, { useContext } from 'react';
+import { UserContext } from './App.js';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { apiDelete, apiJoin } from './Api';
 
 let LineItem = (props) => {
-
-
+    const user = useContext(UserContext);
 
     function handleClickJoin(e) {
         e.preventDefault();
-        alert(`You clicked chat id` + `${props.id}`);
+        alert(`Thanks for joining, ${user}`);
         let currentID = props.id;
         let testUser = {
             "id": currentID,
-            "user": "Henry"
+            "user": `${user}`
         }
         let result = apiJoin(testUser)
         if (result >= 300)
@@ -51,6 +54,7 @@ let LineItem = (props) => {
 
 return (
     <ul>
+        <div>The username is {user}.</div>
         <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
                 {props.value}

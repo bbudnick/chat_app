@@ -21,8 +21,8 @@ import LineItem from './LineItem';
 import { NewChatRoomForm } from './NewChatRoomForm';
 
 let SideBar = (props) => {
-    const lineItem = props.chatrooms.map(({ id, title }, index) =>
-        <LineItem key={index} id={id} value={title} />
+    const lineItem = props.chatrooms.map(({ user, id, title }, index) =>
+        <LineItem key={index} id={id} value={title} user={user}/>
     )
 
     return (
