@@ -86,6 +86,10 @@
     background-color: #f1f1f1;
     padding: 20px;
   }
+
+  .roomlist, .chat {
+    list-style-type: none;
+  }
   
   /* Main column */
   .main {   

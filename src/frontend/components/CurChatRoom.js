@@ -7,23 +7,26 @@ import React from 'react';
 import '../styles/App.css';
 
 export function CurChatRoom(props) {
-    console.log(`chatRoom: ${JSON.stringify(props.currentRoom)}`);
-    let title = '';
-    let chat = [];
-    if (props.currentRoom !== undefined) {
-        title = props.currentRoom.map( (item, i) => {return {key: i}, item.title;} );
-        chat = props.currentRoom.map( (item, i) => {return item.chat;} );
-     } else {
-         title = "Title not yet defined";
-     }
+
+    if(props.state.loading) { 
+        console.log(`CurChatRoom: loading...`);
+        return (
+            <div>
+                <h1>Chatroom Loading...</h1>
+            </div>
+        );
+    }
+
+    console.log(`CurChatRoom: currentRoom=${JSON.stringify(props.state.currentRoom)}`);
+    console.log(`CurChatRoom: chat=${JSON.stringify(props.state.currentRoom.chat)}`);
 
     return (
         <div className="curchatroom">
-            <h2>{title}</h2>
+            <h2>{props.state.currentRoom.title}</h2>
             <ul className="chat">
-            {chat.map( (item, i) => { 
-                        return <li key={i}>
-                            user:{item.user} message:{item.message}
+            {props.state.currentRoom.chat.map( (item) => { 
+                        return <li key={item.user}>
+                            {item.user}:  {item.message}
                         </li>
                         }
                     )
