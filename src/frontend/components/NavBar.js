@@ -32,7 +32,10 @@ export function NavBar(props) {
     }
 
     const listMembers = () => {
-        console.log(`NavBar: listMembers members=${props.state.currentRoom.users} from room=${props.state.currentRoomId}`);
+        let request = {'id':props.state.currentRoomId};
+        apiMembers(request).then( users => {
+            console.log(`NavBar: listMembers members=${users} from room=${props.state.currentRoomId}`);
+        })
     }
 
     const deleteRoom = () => {
