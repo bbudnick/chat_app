@@ -23,6 +23,7 @@ class App extends React.Component {
             currentRoom: {'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]},
         };
         this.setCurrentRoomId = this.setCurrentRoomId.bind(this)
+        this.setCurrentUser = this.setCurrentUser.bind(this)
         console.log(`constructor: state:${JSON.stringify(this.state)}`);
     };
 
@@ -51,6 +52,10 @@ class App extends React.Component {
             );
     }
 
+    setCurrentUser(user) {
+        this.setState({ user: user });
+    }
+
     render() {
         if(this.state.loading) { 
             console.log(`App: loading...`);
@@ -64,7 +69,7 @@ class App extends React.Component {
         return (
             <div>
                 <Header />
-                <NavBar state={this.state} />
+                <NavBar state={this.state} setCurrentUser={this.setCurrentUser} />
                 <SideBar state={this.state} setCurrentRoomId={this.setCurrentRoomId}/>
                 <CurChatRoom state={this.state} />
                 <MessageBox />

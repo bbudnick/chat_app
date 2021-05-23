@@ -7,11 +7,16 @@ import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete
 
 export function NavBar(props) {
     const createUser = (e) => {
-        console.log(`NavBar: createUser user=`);
+        e.preventDefault();
+        console.log(`NavBar: createUser user=${e.target.user.value}`);
+        props.setCurrentUser(e.target.user.value);
     }
 
     const createRoom = (e) => {
-        console.log(`NavBar: createRoom title=`);
+        e.preventDefault();
+        console.log(`NavBar: createRoom title=${e.target.title.value}`);
+        let request = {'users':['roomadmin'], 'title':e.target.title.value, 'chat': [{"user": "roomadmin", "message": "hello"}]};
+        apiCreate(request);
     }
 
     const joinRoom = () => {
@@ -46,20 +51,24 @@ export function NavBar(props) {
 
     return (
         <div className="navbar">
-            <a href="#" onClick={() => createUser()}>Create User</a>
-            <a href="#" onClick={() => createRoom()}>Create Room</a>
             <a href="#" onClick={() => joinRoom()}>Join</a>
             <a href="#" onClick={() => leaveRoom()}>Leave</a>
             <a href="#" onClick={() => listMembers()}>Members</a>
             <a href="#" onClick={() => send()}>Send</a>
             <a href="#" onClick={() => attachFile()}>Attach</a>
-            {/* <div>
-                <form action="JavaScript:createUser()">
-                    <input type="text" placeholder="Create user" name="user"></input>
+            <a className="right" href="#" onClick={() => deleteRoom()}>Delete</a>
+            <div>
+                <form onSubmit={createUser}>
+                    <input type="text" placeholder="User name" name="user"></input>
                     <button type="submit">Create User</button>
                 </form>
-            </div> */}
-            <a href="#" className="right" onClick={() => deleteRoom()}>Delete</a>
+            </div>
+            <div>
+                <form onSubmit={createRoom}>
+                    <input type="text" placeholder="Room title" name="title"></input>
+                    <button type="submit">Create Room</button>
+                </form>
+            </div>
         </div>
 
     );
