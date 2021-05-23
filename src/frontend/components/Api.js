@@ -46,8 +46,8 @@
 
 /*
     @param: JSON object containing
-        {'title': '<chat room title>'}
-      ie {'title': 'Avengers Mansion Conference Room'}
+        {'users': ['roomadmin'], 'title': '<chat room title>', 'chat':[{'user':'roomadmin', 'message':'hello'}]}
+      ie {'users': ['roomadmin'], 'title': 'Avengers Mansion Conference Room', 'chat':[{'user':'roomadmin', 'message':'hello'}]}
 */
 export const apiCreate = async (request) => {
     let result = await fetch('/create', {

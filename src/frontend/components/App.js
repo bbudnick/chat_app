@@ -18,7 +18,7 @@ class App extends React.Component {
         this.state = {
             loading: false,
             chatrooms: [{'id':'0', 'title':'Initial room'}],
-            user: '',
+            user: 'roomadmin',
             currentRoomId: '0',
             currentRoom: {'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]},
         };
@@ -34,7 +34,6 @@ class App extends React.Component {
                     console.log(`apList: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
                 }
             );
-        this.setState({ user: "brita-budnick" });
         // console.log(`componentDidMount: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
     };
 
@@ -53,7 +52,6 @@ class App extends React.Component {
     }
 
     render() {
-        // console.log(`App render: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
         if(this.state.loading) { 
             console.log(`App: loading...`);
             return (
