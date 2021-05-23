@@ -38,10 +38,6 @@ class App extends React.Component {
         // console.log(`componentDidMount: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
     };
 
-    componentDidUpdate() {
-        // console.log(`componentDidUpdate: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
-    }
-
     setCurrentRoomId(roomId) {
         this.setState({ currentRoomId: roomId });
         let request = {'id': roomId};
@@ -70,8 +66,8 @@ class App extends React.Component {
         return (
             <div>
                 <Header />
-                <NavBar />
-                <SideBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
+                <NavBar state={this.state} />
+                <SideBar state={this.state} setCurrentRoomId={this.setCurrentRoomId}/>
                 <CurChatRoom state={this.state} />
                 <MessageBox />
                 <Footer />

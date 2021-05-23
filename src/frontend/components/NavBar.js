@@ -4,13 +4,18 @@
 
 import React from 'react';
 
-export function NavBar() {
+export function NavBar(props) {
+    const join = () => {
+        console.log(`NavBar: join`);
+    }
+
     return (
         <div className="navbar">
             <a href="#" className="active">Home</a>
-            <a href="#">Link</a>
-            <a href="#">Link</a>
-            <a href="#" className="right">Link</a>
+            <a href="#">Create</a>
+            <a href="#">Join</a>
+            <a href="#">Leave</a>
+            <a href="#" className="right">Delete</a>
         </div>
 
     );
