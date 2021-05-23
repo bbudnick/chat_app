@@ -3,10 +3,10 @@
 */
 
 import React from 'react';
-import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll, apiChat } from './Api';
+import { apiCreate, apiJoin, apiLeave, apiMembers, apiDelete } from './Api';
 
 export function NavBar(props) {
-    const createUser = (e) => {
+    const setUser = (e) => {
         e.preventDefault();
         console.log(`NavBar: createUser user=${e.target.user.value}`);
         props.setCurrentUser(e.target.user.value);
@@ -35,14 +35,6 @@ export function NavBar(props) {
         console.log(`NavBar: listMembers members=${props.state.currentRoom.users} from room=${props.state.currentRoomId}`);
     }
 
-    const send = () => {
-        console.log(`NavBar: send message= to room=${props.state.currentRoomId}`);
-    }
-
-    const attachFile = () => {
-        console.log(`NavBar: attachFile file= to room=${props.state.currentRoomId}`);
-    }
-
     const deleteRoom = () => {
         let request = {'id':props.state.currentRoomId};
         console.log(`NavBar: delete room=${props.state.currentRoomId}`);
@@ -54,13 +46,11 @@ export function NavBar(props) {
             <a href="#" onClick={() => joinRoom()}>Join</a>
             <a href="#" onClick={() => leaveRoom()}>Leave</a>
             <a href="#" onClick={() => listMembers()}>Members</a>
-            <a href="#" onClick={() => send()}>Send</a>
-            <a href="#" onClick={() => attachFile()}>Attach</a>
             <a className="right" href="#" onClick={() => deleteRoom()}>Delete</a>
             <div>
-                <form onSubmit={createUser}>
+                <form onSubmit={setUser}>
                     <input type="text" placeholder="User name" name="user"></input>
-                    <button type="submit">Create User</button>
+                    <button type="submit">Set User</button>
                 </form>
             </div>
             <div>

@@ -6,11 +6,28 @@
 */
 
 import React from 'react';
+import { apiUpdate, apiFile } from './Api';
 
 export function MessageBox(props) {
-   
+    const sendMessage = (e) => {
+        e.preventDefault();
+        console.log(`MessageBox: sendMessage messager=${e.target.message.value}`);
+        let request = {
+            'id': props.state.currentRoomId,
+            'chat': {
+                'user': props.state.user,
+                'message': e.target.message.value
+            }
+        };
+        apiUpdate(request);
+    }
+
     return (
         <div>
+            <form onSubmit={sendMessage}>
+                <input type="text" placeholder="Enter message" name="message"></input>
+                <button type="submit">Send</button>
+            </form>
         </div>
 
     );

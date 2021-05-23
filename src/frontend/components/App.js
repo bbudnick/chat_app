@@ -72,7 +72,7 @@ class App extends React.Component {
                 <NavBar state={this.state} setCurrentUser={this.setCurrentUser} />
                 <SideBar state={this.state} setCurrentRoomId={this.setCurrentRoomId}/>
                 <CurChatRoom state={this.state} />
-                <MessageBox />
+                <MessageBox state={this.state} />
                 <Footer />
             </div>
         );
