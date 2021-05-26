@@ -79,6 +79,23 @@ const App = () => {
         });
     };
 
+    const attachFile = (request) => {
+        apiFile(request).then(response => {
+            if (!response.result.ok)
+                alert(`File API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`Didn't attach the file`);
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                });
+            }
+        });
+    };
+
     return (
         <UserContext.Provider value={currentUser}>
             <div>
@@ -98,7 +115,7 @@ const App = () => {
             </form>
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId}/>
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
-                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} />
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
                 <Footer />
             </div>
         </UserContext.Provider>

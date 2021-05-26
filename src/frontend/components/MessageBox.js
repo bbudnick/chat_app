@@ -29,7 +29,7 @@ export function MessageBox(props) {
             'file': e.target.file.value // TBD base64() encode contents 1st
         };
 
-        // apiFile(request);
+        props.attachFile(request);
     }
 
     return (
