@@ -13,26 +13,25 @@
 
 
 
-import React, { useState } from "react";
+import React from "react";
 import { apiCreate } from "./Api";
 
 export function NewChatRoomForm() {
-    const [name, setName] = useState("");
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
+    const handleSubmit = (e) => {
+        e.preventDefault();
         let request = { 
             "users": ["roomadmin"],
-            "title": name,
+            "title": e.target.newroom.value,
             "chat": [{"user": "roomadmin", "message": "hello"}]
         };
         apiCreate(request).then(response => {
             if (!response.result.ok)
                 alert(`Create API not currently available`)
             else if (response.result.n) 
-                alert(`Successfully added new chatroom ${name}`);
+                alert(`Successfully added new chatroom ${e.target.newroom.value}`);
             else
-                alert(`Not able to create ${name}`); 
+                alert(`Not able to create ${e.target.newroom.value}`); 
         });
 
     }
@@ -40,13 +39,14 @@ export function NewChatRoomForm() {
         <form onSubmit={handleSubmit}>
             <label>
                Create a new chatroom? 
+            <br></br>
             <input
                     type="text"
-                    value={name}
-                    onChange={e => setName(e.target.value)}
+                    placeholder="New Room"
+                    name="newroom"
                 />
             </label>
-            <input type="submit" value="Submit" />
+            <button type="submit">Create</button>
         </form>
     );
 }

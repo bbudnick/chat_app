@@ -24,7 +24,7 @@ let LineItem = (props) => {
             alert(`Can't find this room.`);
         } else {
             console.log(`LineItem: handleClickSetCurrent: id=${props.id}`);
-            props.setRoom(props.id);
+            props.setRoomId(props.id);
         }
     }
 

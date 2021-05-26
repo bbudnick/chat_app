@@ -10,7 +10,7 @@ import Header from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
 import { Footer } from './Footer';
-import { apiList, apiChat } from './Api';
+import { apiList, apiUpdate, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
 
@@ -50,14 +50,33 @@ const App = () => {
         });
     }, [currentRoomId]);
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault(); 
-        userObj.user = currentUser; 
-        alert(`Your username is now ${currentUser}`);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setCurrentUser(e.target.currentUser.value); 
+        userObj.user = e.target.currentUser.value; 
+        alert(`Your username is now ${e.target.currentUser.value}`);
     }
 
-    const setRoom = (roomId) => {
+    const setRoomId = (roomId) => {
         setCurrentRoomId(roomId);
+    };
+
+    const updateRoom = (request) => {
+        apiUpdate(request).then(response => {
+            if (!response.result.ok)
+                alert(`Update API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`Didn't update the chat room`);
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                });
+            }
+            
+        });
     };
 
     return (
@@ -67,19 +86,19 @@ const App = () => {
                 <form onSubmit={handleSubmit}>
                 <label>
                     Please declare your username:
+                <br></br>
                 <input
-                        placeholder="username"
+                        placeholder="User name"
                         required="required"
                         type="text"
-                        onChange={e => setCurrentUser(e.target.value)}
-                        value={currentUser}
+                        name="currentUser"
                     />
                 </label>
-                <button type="submit">submit</button>
+                <button type="submit">Submit</button>
             </form>
-                <SideBar chatrooms={list} currentUser={currentUser} setRoom={setRoom}/>
+                <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId}/>
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
-                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser}/>
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} />
                 <Footer />
             </div>
         </UserContext.Provider>
