@@ -1,6 +1,6 @@
 /* App.js
 *
-*    The root module of the frontend.  It is the only class component in the tree.
+*    The root module of the frontend.
 *
 */
 
@@ -79,6 +79,7 @@ const App = () => {
             </form>
                 <SideBar chatrooms={list} currentUser={currentUser} setRoom={setRoom}/>
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser}/>
                 <Footer />
             </div>
         </UserContext.Provider>
@@ -86,14 +87,4 @@ const App = () => {
     );
 };
 
-
 export default App;
-
-{/* <NavBar /> */ }
-
-
-{/* 
-            <CurChatRoom />
-            <MessageBox />
-            <Footer /> */}
-
