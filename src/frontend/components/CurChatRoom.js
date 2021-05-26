@@ -26,7 +26,7 @@ export function CurChatRoom(props) {
             <h3>{props.state.user}</h3>
             <ul className="chat">
             {props.state.currentRoom.chat.map( (item) => { 
-                        return <li key={item.user}>
+                        return <li key={Math.random()}>
                             {item.user}:  {item.message}
                         </li>
                         }
