@@ -38,6 +38,18 @@ const App = () => {
         });
     }, [list]);
 
+    useEffect(() => {
+        if (currentRoomId === '0') {
+            return;
+        }
+        setLoading(true);
+        let request = {'id': currentRoomId};
+        apiChat(request).then ( chatroom => {
+            setCurrentRoom(chatroom);
+            setLoading(false);
+        });
+    }, [currentRoomId]);
+
     const handleSubmit = (evt) => {
         evt.preventDefault(); 
         userObj.user = currentUser; 
@@ -67,6 +79,7 @@ const App = () => {
             </form>
                 <SideBar chatrooms={list} currentUser={currentUser} setRoom={setRoom}/>
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
+                <Footer />
             </div>
         </UserContext.Provider>
 
