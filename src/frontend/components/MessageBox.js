@@ -13,9 +13,9 @@ export function MessageBox(props) {
         e.preventDefault();
         console.log(`MessageBox: sendMessage message=${e.target.message.value}`);
         let request = {
-            'id': props.state.currentRoomId,
+            'id': props.currentRoomId,
             'chat': {
-                'user': props.state.user,
+                'user': props.currentUser,
                 'message': e.target.message.value
             }
         };
@@ -26,7 +26,7 @@ export function MessageBox(props) {
         e.preventDefault();
         console.log(`MessageBox: attachFile file=${e.target.file.value}`);
         let request = {
-            'id': props.state.currentRoomId,
+            'id': props.currentRoomId,
             'file': e.target.file.value // TBD base64() encode contents 1st
         };
 
