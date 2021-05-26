@@ -5,21 +5,8 @@
 
 import React from 'react';
 import '../styles/App.css';
-// import { MessageBox } from './MessageBox';
 
 export function CurChatRoom(props) {
-
-    // if(props.state.loading) { 
-    //     console.log(`CurChatRoom: loading...`);
-    //     return (
-    //         <div>
-    //             <h1>Chatroom Loading...</h1>
-    //         </div>
-    //     );
-    // }
-
-    // console.log(`CurChatRoom: currentRoom=${JSON.stringify(props.state.currentRoom)}`);
-    // console.log(`CurChatRoom: chat=${JSON.stringify(props.state.currentRoom.chat)}`);
 
     return (
         <div className="curchatroom">

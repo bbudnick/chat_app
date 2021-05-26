@@ -80,11 +80,13 @@ export const apiList = async () => {
         method: "GET",
     })
     .then(res => {
-        if(res.status >= 300) { throw new Error(res.statusText); }
+        if(res.status !== 200) { throw new Error(res.statusText); }
         return res.json();
     })
     .catch(err => { 
         console.log(err); 
+        let empty = [];
+        return empty;
     });    
     return result;
 };

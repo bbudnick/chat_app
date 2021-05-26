@@ -21,9 +21,20 @@ export function NewChatRoomForm() {
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-        let NewChatRoom = { "title": name}
-        apiCreate(NewChatRoom);
-        alert(`Successfully added new chatroom ${name}`);
+        let request = { 
+            "users": ["roomadmin"],
+            "title": name,
+            "chat": [{"user": "roomadmin", "message": "hello"}]
+        };
+        apiCreate(request).then(response => {
+            if (!response.result.ok)
+                alert(`Create API not currently available`)
+            else if (response.result.n) 
+                alert(`Successfully added new chatroom ${name}`);
+            else
+                alert(`Not able to create ${name}`); 
+        });
+
     }
     return (
         <form onSubmit={handleSubmit}>
