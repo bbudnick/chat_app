@@ -21,7 +21,7 @@ const chat = async (request) => {
     .then((res) => { return res; })
     .catch((err) => { return console.log('dbChat failed', err) });
 
-    return result;
+    return result[0];
 };
 
 module.exports = chat;

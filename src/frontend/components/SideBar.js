@@ -2,28 +2,41 @@
     This function encompasses the side bar where 
     all chatrooms are listed and new chatrooms can be
     generated. 
+
+    The SideBar child component receives the chatroom object from App.js
+    as props. Key value pairs in props are then mapped. Key usage is 
+    consistent with current ReactJS documentation: 
+    https://reactjs.org/docs/lists-and-keys.html
+
+    Each chatroom is a clickable link that allows the user to choose if they would like to join 
+    the chatroom that was clicked or delete it. 
+
 */
 
 
-import React, { useState } from 'react';
+
+import React from 'react';
+import PropTypes from 'prop-types';
+import LineItem from './LineItem';
 import { NewChatRoomForm } from './NewChatRoomForm';
-import { DeleteChatRoomForm } from './DeleteChatRoomForm';
-import { Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from "reactstrap";
 
-export function SideBar(props) {
-
+let SideBar = (props) => {
+    let lineItem = "";
+    if(props.chatrooms) {
+        lineItem = props.chatrooms.map(({ users, id, title }, index) =>
+            <LineItem key={index} id={id} title={title} currentUser={props.currentUser} setRoom={props.setRoom} />
+        )
+    }
     return (
-        <aside className="sidebar">
-            <ul className="roomlist">
-                {props.chatrooms.map( room => {
-                    return <li key={room.id}>
-                        <a onClick={ () => props.setCurrentRoomId(room.id) } href="#">
-                        {room.title}
-                        </a>
-                    </li>    
-                })}
-
-            </ul>
+        <aside>
+            {lineItem}
+            <NewChatRoomForm />
         </aside>
     )
 };
+
+SideBar.propTypes = {
+    chatrooms: PropTypes.array.isRequired,
+}
+
+export default SideBar;

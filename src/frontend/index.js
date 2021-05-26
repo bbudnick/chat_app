@@ -5,9 +5,9 @@
 *
 */
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from "./styles/App.css";
 
 import App from './components/App';
 

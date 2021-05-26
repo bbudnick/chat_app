@@ -1,66 +1,90 @@
 /* App.js
 *
-*    The root module of the frontend.  It is the only class component in the tree.
+*    The root module of the frontend.
 *
 */
 
-import React, { useState } from 'react';
-import { Header } from './Header';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import Header from './Header';
 import { NavBar } from './NavBar';
-import { MessageBox } from './MessageBox';
-import { SideBar } from './SideBar';
+import SideBar from './SideBar';
 import { Footer } from './Footer';
-import { Loader } from "react-loader-spinner";
-import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll, apiChat } from './Api';
+import { apiList, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
+import { MessageBox } from './MessageBox';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            chatrooms: [],
-            user: '',
-            currentRoomId: '',
-            currentRoom: [],
+const userObj = {
+    user: "default"
+}
+export const UserContext = React.createContext(userObj);
 
-        };
-        /* This would be appropriate for a callback */
-        this.setCurrentRoomId = this.setCurrentRoomId.bind(this)
-    };
+const App = () => {
 
-    async componentDidMount() {
-        //call apiList to list the chatrooms 
-        //refresh if create new room has been called by child 
-        let chatrooms = await apiList();
+    //[reactive value, setter]
+    const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
+    const [currentUser, setCurrentUser] = useState('roomadmin');
+    const [currentRoomId, setCurrentRoomId] = useState('0');
+    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
+    const [loading, setLoading] = useState(false);
 
-        this.setState({ user: "brita-budnick" });
-        this.setState({ version: this.props.version });
-        this.setState({ chatrooms: chatrooms });
-    };
+    //provide list as dependency so that change in list is tracked
+    //and useEffect is run when list changes 
+    useEffect(() => {
+        setLoading(true);
+        apiList().then ( chatrooms => {
+            setList(chatrooms);
+            setLoading(false);
+        });
+    }, [list]);
 
-    async setCurrentRoomId(roomId) {
-        this.setState({ currentRoomId: roomId });
-        let request = {'id': this.state.currentRoomId};
-        let currentRoom = await apiChat(request);
-        this.setState({ currentRoom: currentRoom });
-        console.log(`current room ID: ${this.state.currentRoomId}`);
-        console.log(`current room: ${JSON.stringify(this.state.currentRoom)}`);
+    useEffect(() => {
+        if (currentRoomId === '0') {
+            return;
+        }
+        setLoading(true);
+        let request = {'id': currentRoomId};
+        apiChat(request).then ( chatroom => {
+            setCurrentRoom(chatroom);
+            setLoading(false);
+        });
+    }, [currentRoomId]);
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault(); 
+        userObj.user = currentUser; 
+        alert(`Your username is now ${currentUser}`);
     }
 
-    render() {
-        return (
+    const setRoom = (roomId) => {
+        setCurrentRoomId(roomId);
+    };
+
+    return (
+        <UserContext.Provider value={currentUser}>
             <div>
                 <Header />
-                <NavBar />
-                <SideBar chatrooms={this.state.chatrooms} setCurrentRoomId={this.setCurrentRoomId}/>
-                <CurChatRoom currentRoom={this.state.currentRoom} />
-                <MessageBox />
+                <form onSubmit={handleSubmit}>
+                <label>
+                    Please declare your username:
+                <input
+                        placeholder="username"
+                        required="required"
+                        type="text"
+                        onChange={e => setCurrentUser(e.target.value)}
+                        value={currentUser}
+                    />
+                </label>
+                <button type="submit">submit</button>
+            </form>
+                <SideBar chatrooms={list} currentUser={currentUser} setRoom={setRoom}/>
+                <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser}/>
                 <Footer />
             </div>
-        );
-    };
+        </UserContext.Provider>
+
+    );
 };
-
-
 
 export default App;

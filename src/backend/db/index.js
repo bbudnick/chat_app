@@ -50,8 +50,8 @@ dbClient()
 let dbCreate = async (request) => {
     const client = await dbClient();
     const col = await dbCol(client);
-    const {title} = request;
-    let newRec = { 'title': title };
+    const {users, title, chat} = request;
+    let newRec = { 'users': users, 'title': title, 'chat': chat };
     let results = await col.insertOne(newRec)
         .then((res) => {return res; })
         .catch((err) => { console.log('DB insertOne failed', err); });
