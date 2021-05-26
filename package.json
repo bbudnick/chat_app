@@ -1,6 +1,6 @@
 {
   "name": "felixchat",
-  "version": "0.0.2",
+  "version": "0.5.0",
   "description": "Chat app",
   "license": "MIT",
   "main": "src/backend/server.js",
