@@ -10,7 +10,7 @@ import Header from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
 import { Footer } from './Footer';
-import { apiList, apiUpdate, apiChat } from './Api';
+import { apiList, apiUpdate, apiChat, apiFile } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
 
