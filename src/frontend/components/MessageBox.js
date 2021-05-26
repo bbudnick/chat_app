@@ -46,4 +46,4 @@ export function MessageBox(props) {
         </div>
 
     );
-};
+}

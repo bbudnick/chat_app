@@ -5,78 +5,82 @@
 */
 
 import React from 'react';
-import { Header } from './Header';
+import { useEffect, useState } from 'react';
+import Header from './Header';
 import { NavBar } from './NavBar';
-import { MessageBox } from './MessageBox';
-import { SideBar } from './SideBar';
+import SideBar from './SideBar';
 import { Footer } from './Footer';
-import { apiCreate, apiList, apiJoin, apiLeave, apiMembers, apiUpdate, apiDelete, apiFile, apiDeleteAll, apiChat } from './Api';
+import { apiList, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            loading: false,
-            chatrooms: [{'id':'0', 'title':'Initial room'}],
-            user: 'roomadmin',
-            currentRoomId: '0',
-            currentRoom: {'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]},
-        };
-        this.setCurrentRoomId = this.setCurrentRoomId.bind(this)
-        this.setCurrentUser = this.setCurrentUser.bind(this)
-        console.log(`constructor: state:${JSON.stringify(this.state)}`);
-    };
+import { MessageBox } from './MessageBox';
 
-    componentDidMount() {
-        this.setState({loading: true});
-        apiList().then( chatrooms => {
-                    this.setState({ chatrooms: chatrooms });
-                    this.setState({loading: false});
-                    console.log(`apList: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
-                }
-            );
-        // console.log(`componentDidMount: chatrooms=${JSON.stringify(this.state.chatrooms)}`);
-    };
+const userObj = {
+    user: "default"
+}
+export const UserContext = React.createContext(userObj);
 
-    setCurrentRoomId(roomId) {
-        this.setState({ currentRoomId: roomId });
-        let request = {'id': roomId};
-        console.log(`setCurrentRoomId: request=${JSON.stringify(request)}`);
-        this.setState({loading: true});
-        apiChat(request).then( currentRoom => {
-                    this.setState({ currentRoom: currentRoom });
-                    this.setState({loading: false});
-                    console.log(`setCurrentRoomId: currentroomID=${this.state.currentRoomId}`);
-                    console.log(`setCurrentRoomId: currentRoom=${JSON.stringify(this.state.currentRoom)}`);
-                }
-            );
+const App = () => {
+
+    //[reactive value, setter]
+    const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
+    const [userName, setUserName] = useState('roomadmin');
+    const [currentRoomId, setCurrentRoomId] = useState('0');
+    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
+    const [loading, setLoading] = useState(false);
+
+    //provide list as dependency so that change in list is tracked
+    //and useEffect is run when list changes 
+    useEffect(() => {
+        setLoading(true);
+        apiList().then ( chatrooms => {
+            setList(chatrooms);
+            setLoading(false);
+        });
+    }, [list]);
+
+    const handleSubmit = (evt) => {
+        evt.preventDefault(); 
+        userObj.user = userName; 
+        alert(`Your username is now ${userName}`);
     }
 
-    setCurrentUser(user) {
-        this.setState({ user: user });
-    }
+    const setRoom = (roomId) => {
+        setCurrentRoomId(roomId);
+    };
 
-    render() {
-        if(this.state.loading) { 
-            console.log(`App: loading...`);
-            return (
-                <div>
-                    <h1 className="visually-hidden">Loading...</h1>
-                </div>
-            );
-        }
-
-        return (
+    return (
+        <UserContext.Provider value={userName}>
             <div>
                 <Header />
-                <NavBar state={this.state} setCurrentUser={this.setCurrentUser} />
-                <SideBar state={this.state} setCurrentRoomId={this.setCurrentRoomId}/>
-                <CurChatRoom state={this.state} />
-                <MessageBox state={this.state} />
-                <Footer />
+                <form onSubmit={handleSubmit}>
+                <label>
+                    Please declare your username:
+                <input
+                        placeholder="username"
+                        required="required"
+                        type="text"
+                        onChange={e => setUserName(e.target.value)}
+                        value={userName}
+                    />
+                </label>
+                <button type="submit">submit</button>
+            </form>
+                <SideBar chatrooms={list} setRoom={setRoom}/>
+                <CurChatRoom currentRoom={currentRoom} userName={userName} />
             </div>
-        );
-    };
+        </UserContext.Provider>
+
+    );
 };
 
+
 export default App;
+
+{/* <NavBar /> */ }
+
+
+{/* 
+            <CurChatRoom />
+            <MessageBox />
+            <Footer /> */}
+
