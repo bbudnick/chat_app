@@ -11,8 +11,6 @@
 
 */
 
-
-
 import React, { useContext } from 'react';
 import { UserContext } from './App.js';
 import Dropdown from 'react-bootstrap/Dropdown';
@@ -23,41 +21,50 @@ let LineItem = (props) => {
 
     function handleClickJoin(e) {
         e.preventDefault();
-        let currentID = props.id;
-        let testUser = {
-            "id": currentID,
-            "user": `${user}`
-        }
-        let result = apiJoin(testUser)
-        if (!`${user}`)
+        if (!`${props.currentUser}`) {
             alert(`Please provide your username before joining.`)
-        else if (result >= 300)
-            alert(`Join API not currently available`)
-        else if (`${user}`)
-            alert(`Thanks for joining, ${user}`);
+            return;
+        }
+
+        let request = {
+            'id': props.id,
+            'user': props.currentUser
+        };
+        apiJoin(request).then(response => {
+            if (!response.result.ok)
+                alert(`Join API not currently available`)
+            else if (response.result.nModified) 
+                alert(`Thanks for joining, ${props.currentUser}`);
+            else
+                alert(`${props.currentUser}, you are already a member`); 
+        });
     }
 
     function handleClickDelete(e) {
         e.preventDefault();
-        alert(`You clicked chat id` + `${props.id}`);
-        let currentID = props.id;
-        let testUser = {
-            "id": currentID,
+        if (!`${props.id}`) {
+            alert(`No valid chat room id`)
+            return;
         }
-        let result = apiDelete(testUser)
-        if (result >= 300)
-            alert(`No can do `)
-        else {
-            alert(`Chatroom deleted`)
-
-        }
+        
+        let request = {
+            'id': props.id
+        };
+        apiDelete(request).then(response => {
+            if (!response.ok)
+                alert(`Delete API not currently available`)
+            else if (response.deletedCount) 
+                alert(`${props.title} has been deleted`);
+            else
+                alert(`${props.title}, was not deleted`); 
+        });
     }
 
     return (
         <ul>
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    {props.value}
+                    {props.title}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>

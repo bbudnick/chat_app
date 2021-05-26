@@ -23,7 +23,7 @@ const App = () => {
 
     //[reactive value, setter]
     const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
-    const [userName, setUserName] = useState('roomadmin');
+    const [currentUser, setCurrentUser] = useState('roomadmin');
     const [currentRoomId, setCurrentRoomId] = useState('0');
     const [currentRoom, setCurrentRoom] = useState({'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
     const [loading, setLoading] = useState(false);
@@ -40,8 +40,8 @@ const App = () => {
 
     const handleSubmit = (evt) => {
         evt.preventDefault(); 
-        userObj.user = userName; 
-        alert(`Your username is now ${userName}`);
+        userObj.user = currentUser; 
+        alert(`Your username is now ${currentUser}`);
     }
 
     const setRoom = (roomId) => {
@@ -49,7 +49,7 @@ const App = () => {
     };
 
     return (
-        <UserContext.Provider value={userName}>
+        <UserContext.Provider value={currentUser}>
             <div>
                 <Header />
                 <form onSubmit={handleSubmit}>
@@ -59,14 +59,14 @@ const App = () => {
                         placeholder="username"
                         required="required"
                         type="text"
-                        onChange={e => setUserName(e.target.value)}
-                        value={userName}
+                        onChange={e => setCurrentUser(e.target.value)}
+                        value={currentUser}
                     />
                 </label>
                 <button type="submit">submit</button>
             </form>
-                <SideBar chatrooms={list} setRoom={setRoom}/>
-                <CurChatRoom currentRoom={currentRoom} userName={userName} />
+                <SideBar chatrooms={list} currentUser={currentUser} setRoom={setRoom}/>
+                <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
             </div>
         </UserContext.Provider>
 

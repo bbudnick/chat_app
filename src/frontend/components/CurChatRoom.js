@@ -24,7 +24,7 @@ export function CurChatRoom(props) {
     return (
         <div className="curchatroom">
             <h2>{props.currentRoom.title}</h2>
-            <h3>{props.userName}</h3>
+            <h3>{props.currentUser}</h3>
             <ul className="chat">
             {props.currentRoom.chat.map( (item) => { 
                         return <li key={Math.random()}>
