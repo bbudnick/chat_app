@@ -28,9 +28,8 @@ let SideBar = (props) => {
         )
     }
     return (
-        <aside>
+        <aside className='sidebar'>
             {lineItem}
-            <NewChatRoomForm />
         </aside>
     )
 };

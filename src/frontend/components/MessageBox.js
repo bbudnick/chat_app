@@ -33,7 +33,7 @@ export function MessageBox(props) {
     }
 
     return (
-        <div>
+        <div className="messagebox">
             <form onSubmit={sendMessage}>
                 <input type="text" placeholder="Enter message" name="message"></input>
                 <button type="submit">Send</button>

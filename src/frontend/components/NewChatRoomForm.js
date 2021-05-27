@@ -38,15 +38,13 @@ export function NewChatRoomForm() {
     return (
         <form onSubmit={handleSubmit}>
             <label>
-               Create a new chatroom? 
-            <br></br>
             <input
                     type="text"
                     placeholder="New Room"
                     name="newroom"
                 />
             </label>
-            <button type="submit">Create</button>
+            <button type="submit">Create Room</button>
         </form>
     );
 }

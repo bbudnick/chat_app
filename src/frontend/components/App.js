@@ -50,7 +50,7 @@ const App = () => {
         });
     }, [currentRoomId]);
 
-    const handleSubmit = (e) => {
+    const handleSetUser = (e) => {
         e.preventDefault();
         setCurrentUser(e.target.currentUser.value); 
         userObj.user = e.target.currentUser.value; 
@@ -98,26 +98,14 @@ const App = () => {
 
     return (
         <UserContext.Provider value={currentUser}>
-            <div>
+            <main className="grid-container">
                 <Header />
-                <form onSubmit={handleSubmit}>
-                <label>
-                    Please declare your username:
-                <br></br>
-                <input
-                        placeholder="User name"
-                        required="required"
-                        type="text"
-                        name="currentUser"
-                    />
-                </label>
-                <button type="submit">Submit</button>
-            </form>
+                <NavBar handleSetUser={handleSetUser} />
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId}/>
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
                 <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
                 <Footer />
-            </div>
+            </main>
         </UserContext.Provider>
 
     );

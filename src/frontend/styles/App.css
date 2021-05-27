@@ -99,12 +99,47 @@
     padding: 20px;
   }
   
-  /* Footer */
+  /* Grid */
+  .grid-container {
+    display: grid;
+    width: 100%;
+    grid-template-rows: repeat(20, auto);
+    grid-template-columns: repeat(5, 20%);
+  }
+
+  .header {
+    grid-column: 1 / 5;
+    grid-row: 1;
+  }
+
+  .navbar {
+    grid-column: 1 / 5;
+    grid-row: 2;
+  }
+
+  .sidebar {
+    grid-column: 1 / 2;
+    grid-row: 3 / 19;
+  }
+
+  .curchatroom {
+    grid-column: 3 / 5;
+    grid-row: 3 / 15;    
+  }
+
+  .messagebox {
+    grid-column: 3 / 5;
+    grid-row: 16 / 19;    
+  }
+
   .footer {
     padding: 20px;
     text-align: center;
     background: #ddd;
+    grid-column: 1 / 5;
+    grid-row: 20;
   }
+
   
   /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
   @media screen and (max-width: 700px) {
