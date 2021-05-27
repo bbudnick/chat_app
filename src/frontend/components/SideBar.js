@@ -18,19 +18,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LineItem from './LineItem';
-import { NewChatRoomForm } from './NewChatRoomForm';
 
 let SideBar = (props) => {
     let lineItem = "";
     if(props.chatrooms) {
         lineItem = props.chatrooms.map(({ users, id, title }, index) =>
-            <LineItem key={index} id={id} title={title} currentUser={props.currentUser} setRoom={props.setRoom} />
+            <LineItem key={index} id={id} title={title} currentUser={props.currentUser}
+             setRoomId={props.setRoomId} joinRoom={props.joinRoom} leaveRoom={props.leaveRoom} deleteRoom={props.deleteRoom}/>
         )
     }
     return (
-        <aside>
+        <aside className='sidebar'>
             {lineItem}
-            <NewChatRoomForm />
         </aside>
     )
 };

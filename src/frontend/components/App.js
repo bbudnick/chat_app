@@ -10,9 +10,10 @@ import Header from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
 import { Footer } from './Footer';
-import { apiList, apiChat } from './Api';
+import { apiCreate, apiList, apiJoin, apiLeave, apiUpdate, apiDelete, apiFile, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
+import Members from './Members';
 
 const userObj = {
     user: "default"
@@ -25,7 +26,7 @@ const App = () => {
     const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
     const [currentUser, setCurrentUser] = useState('roomadmin');
     const [currentRoomId, setCurrentRoomId] = useState('0');
-    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
+    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'users':['roomadmin'], 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
     const [loading, setLoading] = useState(false);
 
     //provide list as dependency so that change in list is tracked
@@ -36,7 +37,7 @@ const App = () => {
             setList(chatrooms);
             setLoading(false);
         });
-    }, [list]);
+    }, []);
 
     useEffect(() => {
         if (currentRoomId === '0') {
@@ -50,40 +51,130 @@ const App = () => {
         });
     }, [currentRoomId]);
 
-    const handleSubmit = (evt) => {
-        evt.preventDefault(); 
-        userObj.user = currentUser; 
-        alert(`Your username is now ${currentUser}`);
+    const handleSetUser = (e) => {
+        e.preventDefault();
+        setCurrentUser(e.target.currentUser.value); 
+        userObj.user = e.target.currentUser.value; 
+        alert(`Your username is now ${e.target.currentUser.value}`);
     }
 
-    const setRoom = (roomId) => {
+    const setRoomId = (roomId) => {
         setCurrentRoomId(roomId);
+    };
+
+    const createRoom = (request) => {
+        apiCreate(request).then(response => {
+            if (!response.result.ok)
+                alert(`Create API not currently available`)
+            else if (!response.result.n) 
+                alert(`Not able to create ${request.title}`);
+            else {
+                setLoading(true);
+                apiList().then ( chatrooms => {
+                    setList(chatrooms);
+                    setLoading(false);
+                });
+            }     
+        });
+    }
+
+    const joinRoom = (request) => {
+        apiJoin(request).then(response => {
+            if (!response.result.ok)
+                alert(`Join API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`${request.user}, you are already a member`);
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                }); 
+            }     
+        });
+    }
+    
+    const leaveRoom = (request) => {
+        apiLeave(request).then(response => {
+            if (!response.result.ok)
+                alert(`Leave API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`${request.user}, not able to leave`); 
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                }); 
+            }
+        });
+    }      
+
+    const updateRoom = (request) => {
+        apiUpdate(request).then(response => {
+            if (!response.result.ok)
+                alert(`Update API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`Didn't update the chat room`);
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                });
+            }
+        });
+    };
+
+    const deleteRoom = (request) => {
+        apiDelete(request).then(response => {
+            if (!response.ok)
+                alert(`Delete API not currently available`)
+            else if (!response.deletedCount) 
+                alert(`Room has not been deleted`);
+            else {
+                setLoading(true);
+                apiList().then ( chatrooms => {
+                    setList(chatrooms);
+                    setLoading(false);
+                });
+            } 
+        });
+    } 
+
+    const attachFile = (request) => {
+        apiFile(request).then(response => {
+            if (!response.result.ok)
+                alert(`File API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`Didn't attach the file`);
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                });
+            }
+        });
     };
 
     return (
         <UserContext.Provider value={currentUser}>
-            <div>
+            <main className="grid-container">
                 <Header />
-                <form onSubmit={handleSubmit}>
-                <label>
-                    Please declare your username:
-                <input
-                        placeholder="username"
-                        required="required"
-                        type="text"
-                        onChange={e => setCurrentUser(e.target.value)}
-                        value={currentUser}
-                    />
-                </label>
-                <button type="submit">submit</button>
-            </form>
-                <SideBar chatrooms={list} currentUser={currentUser} setRoom={setRoom}/>
+                <NavBar handleSetUser={handleSetUser} createRoom={createRoom} />
+                <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId} 
+                    joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} />
+                <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
-                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser}/>
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
                 <Footer />
-            </div>
+            </main>
         </UserContext.Provider>
-
     );
 };
 

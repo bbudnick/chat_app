@@ -11,13 +11,23 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const router = require('./router');
+const https = require('https');
+const fs = require('fs');
 const app = express();
 
 app.use(express.static('public'));
 app.use( bodyParser.json());
 app.use(router);
 
+var options = {
+    key: [fs.readFileSync(__dirname + '/../certs/selfsigned.key')],
+    cert: [fs.readFileSync(__dirname + '/../certs/selfsigned.crt')]
+}
+
 const port = process.env.PORT || 80;
 const server = app.listen(port, () => console.log(`Server listening on port: ${port}`));
 
-module.exports = server;
+const server2 = https.createServer(options, app);
+server2.listen(443, () => console.log(`Server2 listening on port 443`));
+
+module.exports = {server, server2};

@@ -21,7 +21,7 @@ describe('Test API round trip', () => {
     test('create test', async () => {
         let rc = true;
         try {
-            let request = {'users':users, 'title':title};
+            let request = {'users':[], 'title':title};
             let results = await create(request);
             newChatId = results.insertedId;
         } catch (err) {
@@ -117,8 +117,8 @@ describe('Test API round trip', () => {
         try {
             let request = {'id':newChatId};
             let results = await chat(request);
-            console.log(`Chat of ${results[0].title} \n ${JSON.stringify(results[0].chat)}`);
-            newChat = results[0].chat;
+            console.log(`Chat of ${results.title} \n ${JSON.stringify(results.chat)}`);
+            newChat = results.chat;
         } catch (err) {
             console.log(`chat failed`);
         }
@@ -142,8 +142,8 @@ describe('Test API round trip', () => {
         try {
             let request = {'id':newChatId};
             let results = await chat(request);
-            console.log(`Chat of ${results[0].title} \n ${JSON.stringify(results[0].chat)}`);
-            newChat = results[0].chat;
+            console.log(`Chat of ${results.title} \n ${JSON.stringify(results.chat)}`);
+            newChat = results.chat;
         } catch (err) {
             console.log(`chat failed`);
         }

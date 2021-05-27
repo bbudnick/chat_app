@@ -6,12 +6,11 @@
 */
 
 import React from 'react';
-import { apiUpdate, apiFile } from './Api';
+import { apiFile } from './Api';
 
 export function MessageBox(props) {
     const sendMessage = (e) => {
         e.preventDefault();
-        console.log(`MessageBox: sendMessage message=${e.target.message.value}`);
         let request = {
             'id': props.currentRoomId,
             'chat': {
@@ -19,7 +18,7 @@ export function MessageBox(props) {
                 'message': e.target.message.value
             }
         };
-        apiUpdate(request);
+        props.updateRoom(request);
     }
 
     const attachFile = (e) => {
@@ -30,11 +29,11 @@ export function MessageBox(props) {
             'file': e.target.file.value // TBD base64() encode contents 1st
         };
 
-        // apiFile(request);
+        props.attachFile(request);
     }
 
     return (
-        <div>
+        <div className="messagebox">
             <form onSubmit={sendMessage}>
                 <input type="text" placeholder="Enter message" name="message"></input>
                 <button type="submit">Send</button>
