@@ -13,6 +13,7 @@ import { Footer } from './Footer';
 import { apiList, apiUpdate, apiChat, apiFile } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
+import Members from './Members';
 
 const userObj = {
     user: "default"
@@ -25,7 +26,7 @@ const App = () => {
     const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
     const [currentUser, setCurrentUser] = useState('roomadmin');
     const [currentRoomId, setCurrentRoomId] = useState('0');
-    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
+    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'users':['roomadmin'], 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
     const [loading, setLoading] = useState(false);
 
     //provide list as dependency so that change in list is tracked
@@ -102,6 +103,7 @@ const App = () => {
                 <Header />
                 <NavBar handleSetUser={handleSetUser} />
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId}/>
+                <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
                 <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
                 <Footer />
