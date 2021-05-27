@@ -29,8 +29,10 @@ const App = () => {
 
     // Runs on 1st render only
     useEffect(() => {
-        setCurrentRoomId(localStorage.getItem("currentRoomId"));
-        setCurrentUser(localStorage.getItem("currentUser"));
+        let roomId = localStorage.getItem("currentRoomId");
+        let user = localStorage.getItem("currentUser")
+        roomId ? setCurrentRoomId(roomId) : null;
+        user ? setCurrentUser(user) : null;
         setLoading(true);
         apiList().then ( chatrooms => {
             setList(chatrooms);
