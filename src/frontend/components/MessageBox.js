@@ -6,9 +6,8 @@
 */
 
 import React from 'react';
-import { apiFile } from './Api';
 
-export function MessageBox(props) {
+let MessageBox = (props) => {
     const sendMessage = (e) => {
         e.preventDefault();
         let request = {
@@ -46,3 +45,5 @@ export function MessageBox(props) {
 
     );
 }
+
+export default MessageBox;

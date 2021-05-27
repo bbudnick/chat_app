@@ -17,16 +17,16 @@ import Dropdown from 'react-bootstrap/Dropdown';
 let LineItem = (props) => {
     const user = useContext(UserContext);
 
-    function handleClickSetCurrent(e) {
+    const handleClickSetCurrent = (e) => {
         e.preventDefault();
         if (!`${props.id}`) {
             alert(`Can't find this room.`);
         } else {
             props.setRoomId(props.id);
         }
-    }
+    };
 
-    function handleClickJoin(e) {
+    const handleClickJoin = (e) => {
         e.preventDefault();
         if (!`${props.currentUser}`) {
             alert(`Please provide your username before joining.`)
@@ -37,9 +37,9 @@ let LineItem = (props) => {
             };
             props.joinRoom(request);
         }
-    }
+    };
 
-    function handleClickLeave(e) {
+    const handleClickLeave = (e) => {
         e.preventDefault();
         if (!`${props.currentUser}`) {
             alert(`Please provide your username before leaving.`)
@@ -50,9 +50,9 @@ let LineItem = (props) => {
             };
             props.leaveRoom(request);
         }
-    }
+    };
 
-    function handleClickDelete(e) {
+    const handleClickDelete = (e) => {
         e.preventDefault();
         if (!`${props.id}`) {
             alert(`No valid chat room id`)
@@ -62,7 +62,7 @@ let LineItem = (props) => {
             };
             props.deleteRoom(request);
         }
-    }
+    };
 
     return (
         <ul className="roomlist">
@@ -79,9 +79,6 @@ let LineItem = (props) => {
                 </Dropdown.Menu>
             </Dropdown>
         </ul>
-
-
-
     )
 }
 
