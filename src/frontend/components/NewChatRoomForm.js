@@ -14,27 +14,23 @@
 
 
 import React from "react";
-import { apiCreate } from "./Api";
 
-export function NewChatRoomForm() {
+export function NewChatRoomForm(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        let request = { 
-            "users": ["roomadmin"],
-            "title": e.target.newroom.value,
-            "chat": [{"user": "roomadmin", "message": "hello"}]
-        };
-        apiCreate(request).then(response => {
-            if (!response.result.ok)
-                alert(`Create API not currently available`)
-            else if (response.result.n) 
-                alert(`Successfully added new chatroom ${e.target.newroom.value}`);
-            else
-                alert(`Not able to create ${e.target.newroom.value}`); 
-        });
-
+        if (!e.target.newroom.value) {
+            alert(`No valid room title`);
+        } else {
+            let request = { 
+                "users": ["roomadmin"],
+                "title": e.target.newroom.value,
+                "chat": [{"user": "roomadmin", "message": "hello"}]
+            };
+            props.createRoom(request);
+        }
     }
+
     return (
         <form onSubmit={handleSubmit}>
             <label>

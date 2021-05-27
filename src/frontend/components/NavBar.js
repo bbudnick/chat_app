@@ -10,7 +10,7 @@ export function NavBar(props) {
     return (
         <div className="navbar">
             <SetUserForm handleSetUser={props.handleSetUser} />
-            <NewChatRoomForm />
+            <NewChatRoomForm createRoom={props.createRoom} />
         </div>
 
     );

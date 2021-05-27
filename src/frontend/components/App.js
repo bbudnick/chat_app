@@ -10,7 +10,7 @@ import Header from './Header';
 import { NavBar } from './NavBar';
 import SideBar from './SideBar';
 import { Footer } from './Footer';
-import { apiList, apiUpdate, apiChat, apiFile } from './Api';
+import { apiCreate, apiList, apiJoin, apiLeave, apiUpdate, apiDelete, apiFile, apiChat } from './Api';
 import { CurChatRoom } from './CurChatRoom';
 import { MessageBox } from './MessageBox';
 import Members from './Members';
@@ -37,7 +37,7 @@ const App = () => {
             setList(chatrooms);
             setLoading(false);
         });
-    }, [list]);
+    }, []);
 
     useEffect(() => {
         if (currentRoomId === '0') {
@@ -62,6 +62,56 @@ const App = () => {
         setCurrentRoomId(roomId);
     };
 
+    const createRoom = (request) => {
+        apiCreate(request).then(response => {
+            if (!response.result.ok)
+                alert(`Create API not currently available`)
+            else if (!response.result.n) 
+                alert(`Not able to create ${request.title}`);
+            else {
+                setLoading(true);
+                apiList().then ( chatrooms => {
+                    setList(chatrooms);
+                    setLoading(false);
+                });
+            }     
+        });
+    }
+
+    const joinRoom = (request) => {
+        apiJoin(request).then(response => {
+            if (!response.result.ok)
+                alert(`Join API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`${request.user}, you are already a member`);
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                }); 
+            }     
+        });
+    }
+    
+    const leaveRoom = (request) => {
+        apiLeave(request).then(response => {
+            if (!response.result.ok)
+                alert(`Leave API not currently available`)
+            else if (!response.result.nModified) 
+                alert(`${request.user}, not able to leave`); 
+            else {
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                }); 
+            }
+        });
+    }      
+
     const updateRoom = (request) => {
         apiUpdate(request).then(response => {
             if (!response.result.ok)
@@ -76,9 +126,24 @@ const App = () => {
                     setLoading(false);
                 });
             }
-            
         });
     };
+
+    const deleteRoom = (request) => {
+        apiDelete(request).then(response => {
+            if (!response.ok)
+                alert(`Delete API not currently available`)
+            else if (!response.deletedCount) 
+                alert(`Room has not been deleted`);
+            else {
+                setLoading(true);
+                apiList().then ( chatrooms => {
+                    setList(chatrooms);
+                    setLoading(false);
+                });
+            } 
+        });
+    } 
 
     const attachFile = (request) => {
         apiFile(request).then(response => {
@@ -101,15 +166,15 @@ const App = () => {
         <UserContext.Provider value={currentUser}>
             <main className="grid-container">
                 <Header />
-                <NavBar handleSetUser={handleSetUser} />
-                <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId}/>
+                <NavBar handleSetUser={handleSetUser} createRoom={createRoom} />
+                <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId} 
+                    joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} />
                 <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
                 <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
                 <Footer />
             </main>
         </UserContext.Provider>
-
     );
 };
 
