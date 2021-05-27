@@ -91,7 +91,7 @@ let LineItem = (props) => {
     }
 
     return (
-        <ul>
+        <ul className="roomlist">
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                     {props.title}
