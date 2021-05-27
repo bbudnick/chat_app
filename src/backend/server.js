@@ -20,8 +20,8 @@ app.use( bodyParser.json());
 app.use(router);
 
 var options = {
-    key: [fs.readFileSync(__dirname + '/../../certs/selfsigned.key')],
-    cert: [fs.readFileSync(__dirname + '/../../certs/selfsigned.crt')]
+    key: [fs.readFileSync(__dirname + '/../certs/selfsigned.key')],
+    cert: [fs.readFileSync(__dirname + '/../certs/selfsigned.crt')]
 }
 
 const port = process.env.PORT || 80;
