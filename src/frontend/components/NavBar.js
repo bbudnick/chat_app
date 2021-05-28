@@ -10,6 +10,7 @@ let NavBar = (props) => {
     return (
         <div className="navbar">
             <SetUserForm setUser={props.setUser} />
+            <button onClick={props.multiJoin} >Multi Join</button>
             <NewChatRoomForm createRoom={props.createRoom} />
         </div>
 

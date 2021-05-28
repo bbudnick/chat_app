@@ -26,6 +26,7 @@ const App = () => {
     const [currentRoomId, setCurrentRoomId] = useState('0');
     const [currentRoom, setCurrentRoom] = useState({'id':'0', 'users':['roomadmin'], 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
     const [loading, setLoading] = useState(false);
+    const [pinnedRooms, setPinnedRooms] = useState([]);
 
     // Runs on 1st render only
     useEffect(() => {
@@ -164,13 +165,31 @@ const App = () => {
         });
     };
 
+    const setPinned = (roomId) => {
+        let index = pinnedRooms.indexOf(roomId);
+        if(index !== -1) {
+            delete pinnedRooms[index];
+        } else {
+            pinnedRooms.push(roomId); 
+        }
+        setPinnedRooms(pinnedRooms);
+    };
+
+    const multiJoin = () => {
+        pinnedRooms.map( roomId => {
+            console.log(`App: joining user=${currentUser} roomId=${roomId}`);
+            let request = { 'id':roomId, 'user':currentUser};
+            joinRoom(request);
+        });
+    }
+
     return (
         <UserContext.Provider value={currentUser}>
             <main className="grid-container">
                 <Header />
-                <NavBar setUser={setUser} createRoom={createRoom} />
+                <NavBar setUser={setUser} createRoom={createRoom} multiJoin={multiJoin} />
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId} 
-                    joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} />
+                    joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} setPinned={setPinned} />
                 <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
                 <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />

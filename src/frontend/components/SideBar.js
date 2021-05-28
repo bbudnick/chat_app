@@ -24,7 +24,8 @@ let SideBar = (props) => {
     if(props.chatrooms) {
         lineItem = props.chatrooms.map(({ users, id, title }, index) =>
             <LineItem key={index} id={id} title={title} currentUser={props.currentUser}
-             setRoomId={props.setRoomId} joinRoom={props.joinRoom} leaveRoom={props.leaveRoom} deleteRoom={props.deleteRoom}/>
+             setRoomId={props.setRoomId} joinRoom={props.joinRoom} leaveRoom={props.leaveRoom} 
+             deleteRoom={props.deleteRoom} setPinned={props.setPinned} />
         )
     }
     return (
