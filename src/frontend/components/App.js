@@ -177,7 +177,6 @@ const App = () => {
 
     const multiJoin = () => {
         pinnedRooms.map( roomId => {
-            console.log(`App: joining user=${currentUser} roomId=${roomId}`);
             let request = { 'id':roomId, 'user':currentUser};
             joinRoom(request);
         });
@@ -185,7 +184,6 @@ const App = () => {
 
     const multiUpdate = (request) => {
         pinnedRooms.map( roomId => {
-            console.log(`App: updating user=${currentUser} roomId=${roomId}`);
             request.id = roomId;
             updateRoom(request);
         });
