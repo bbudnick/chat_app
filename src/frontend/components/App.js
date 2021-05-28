@@ -183,6 +183,14 @@ const App = () => {
         });
     }
 
+    const multiUpdate = (request) => {
+        pinnedRooms.map( roomId => {
+            console.log(`App: updating user=${currentUser} roomId=${roomId}`);
+            request.id = roomId;
+            updateRoom(request);
+        });
+    }
+
     return (
         <UserContext.Provider value={currentUser}>
             <main className="grid-container">
@@ -192,7 +200,8 @@ const App = () => {
                     joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} setPinned={setPinned} />
                 <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
-                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom}
+                 attachFile={attachFile} multiUpdate={multiUpdate} />
                 <Footer />
             </main>
         </UserContext.Provider>
