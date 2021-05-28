@@ -6,9 +6,10 @@
 */
 
 import React from 'react';
-import { apiFile } from './Api';
 
-export function MessageBox(props) {
+let MessageBox = (props) => {
+    let multisend = false;
+    
     const sendMessage = (e) => {
         e.preventDefault();
         let request = {
@@ -18,7 +19,11 @@ export function MessageBox(props) {
                 'message': e.target.message.value
             }
         };
-        props.updateRoom(request);
+        if(multisend) {
+            props.multiUpdate(request);
+        } else {
+            props.updateRoom(request);
+        }
     }
 
     const attachFile = (e) => {
@@ -36,13 +41,16 @@ export function MessageBox(props) {
         <div className="messagebox">
             <form onSubmit={sendMessage}>
                 <input type="text" placeholder="Enter message" name="message"></input>
-                <button type="submit">Send</button>
+                <input type="submit" onClick={() => multisend=false} name="send" value="Send"></input>
+                <input type="submit" onClick={() => multisend=true} name="send" value="Multi Send"></input>
             </form>
             <form onSubmit={attachFile}>
                 <input type="file" id="file" name="file"></input>
-                <button type="submit">Attach</button>
+                <input type="submit" value="Attach"></input>
             </form>
         </div>
 
     );
 }
+
+export default MessageBox;

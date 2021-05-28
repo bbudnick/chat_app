@@ -4,10 +4,12 @@
 
 import React from 'react';
 
-export function Footer() {
+const Footer = () => {
     return (
         <div className="footer">
             <h5>@Copyright Team Felix Chat 2021</h5>
         </div>
     );
 };
+
+export default Footer;

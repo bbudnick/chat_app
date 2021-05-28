@@ -6,7 +6,7 @@
 import React from 'react';
 import '../styles/App.css';
 
-export function CurChatRoom(props) {
+let CurChatRoom = (props) => {
 
     return (
         <div className="curchatroom">
@@ -24,3 +24,5 @@ export function CurChatRoom(props) {
         </div>
     );
 };
+
+export default CurChatRoom;

@@ -4,15 +4,14 @@
 *
 */
 
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import Header from './Header';
-import { NavBar } from './NavBar';
+import NavBar from './NavBar';
 import SideBar from './SideBar';
-import { Footer } from './Footer';
+import Footer from './Footer';
 import { apiCreate, apiList, apiJoin, apiLeave, apiUpdate, apiDelete, apiFile, apiChat } from './Api';
-import { CurChatRoom } from './CurChatRoom';
-import { MessageBox } from './MessageBox';
+import CurChatRoom from './CurChatRoom';
+import MessageBox from './MessageBox';
 import Members from './Members';
 
 const userObj = {
@@ -22,16 +21,19 @@ export const UserContext = React.createContext(userObj);
 
 const App = () => {
 
-    //[reactive value, setter]
     const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
     const [currentUser, setCurrentUser] = useState('roomadmin');
     const [currentRoomId, setCurrentRoomId] = useState('0');
     const [currentRoom, setCurrentRoom] = useState({'id':'0', 'users':['roomadmin'], 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
     const [loading, setLoading] = useState(false);
+    const [pinnedRooms, setPinnedRooms] = useState([]);
 
-    //provide list as dependency so that change in list is tracked
-    //and useEffect is run when list changes 
+    // Runs on 1st render only
     useEffect(() => {
+        let roomId = localStorage.getItem("currentRoomId");
+        let user = localStorage.getItem("currentUser")
+        roomId ? setCurrentRoomId(roomId) : null;
+        user ? setCurrentUser(user) : null;
         setLoading(true);
         apiList().then ( chatrooms => {
             setList(chatrooms);
@@ -51,15 +53,16 @@ const App = () => {
         });
     }, [currentRoomId]);
 
-    const handleSetUser = (e) => {
-        e.preventDefault();
-        setCurrentUser(e.target.currentUser.value); 
-        userObj.user = e.target.currentUser.value; 
-        alert(`Your username is now ${e.target.currentUser.value}`);
+    const setUser = (currentUser) => {
+        setCurrentUser(currentUser); 
+        userObj.user = currentUser; 
+        alert(`Your username is now ${currentUser}`);
+        localStorage.setItem("currentUser", currentUser);
     }
 
     const setRoomId = (roomId) => {
         setCurrentRoomId(roomId);
+        localStorage.setItem("currentRoomId", roomId);
     };
 
     const createRoom = (request) => {
@@ -162,16 +165,41 @@ const App = () => {
         });
     };
 
+    const setPinned = (roomId) => {
+        let index = pinnedRooms.indexOf(roomId);
+        if(index !== -1) {
+            delete pinnedRooms[index];
+        } else {
+            pinnedRooms.push(roomId); 
+        }
+        setPinnedRooms(pinnedRooms);
+    };
+
+    const multiJoin = () => {
+        pinnedRooms.map( roomId => {
+            let request = { 'id':roomId, 'user':currentUser};
+            joinRoom(request);
+        });
+    }
+
+    const multiUpdate = (request) => {
+        pinnedRooms.map( roomId => {
+            request.id = roomId;
+            updateRoom(request);
+        });
+    }
+
     return (
         <UserContext.Provider value={currentUser}>
             <main className="grid-container">
                 <Header />
-                <NavBar handleSetUser={handleSetUser} createRoom={createRoom} />
+                <NavBar setUser={setUser} createRoom={createRoom} multiJoin={multiJoin} />
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId} 
-                    joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} />
+                    joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} setPinned={setPinned} />
                 <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
-                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom} attachFile={attachFile} />
+                <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom}
+                 attachFile={attachFile} multiUpdate={multiUpdate} />
                 <Footer />
             </main>
         </UserContext.Provider>

@@ -15,7 +15,7 @@
 
 import React from "react";
 
-export function NewChatRoomForm(props) {
+let NewChatRoomForm = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -44,3 +44,5 @@ export function NewChatRoomForm(props) {
         </form>
     );
 }
+
+export default NewChatRoomForm;

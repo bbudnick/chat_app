@@ -10,23 +10,24 @@
 
 */
 
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { UserContext } from './App.js';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 let LineItem = (props) => {
     const user = useContext(UserContext);
+    const [pinned, setPinned] = useState(false);
 
-    function handleClickSetCurrent(e) {
+    const handleClickSetCurrent = (e) => {
         e.preventDefault();
         if (!`${props.id}`) {
             alert(`Can't find this room.`);
         } else {
             props.setRoomId(props.id);
         }
-    }
+    };
 
-    function handleClickJoin(e) {
+    const handleClickJoin = (e) => {
         e.preventDefault();
         if (!`${props.currentUser}`) {
             alert(`Please provide your username before joining.`)
@@ -37,9 +38,9 @@ let LineItem = (props) => {
             };
             props.joinRoom(request);
         }
-    }
+    };
 
-    function handleClickLeave(e) {
+    const handleClickLeave = (e) => {
         e.preventDefault();
         if (!`${props.currentUser}`) {
             alert(`Please provide your username before leaving.`)
@@ -50,9 +51,9 @@ let LineItem = (props) => {
             };
             props.leaveRoom(request);
         }
-    }
+    };
 
-    function handleClickDelete(e) {
+    const handleClickDelete = (e) => {
         e.preventDefault();
         if (!`${props.id}`) {
             alert(`No valid chat room id`)
@@ -62,26 +63,30 @@ let LineItem = (props) => {
             };
             props.deleteRoom(request);
         }
-    }
+    };
+
+    const handleClickPin = (e) => {
+        e.preventDefault();
+        pinned ? setPinned(false) : setPinned(true);
+        props.setPinned(props.id);
+    };
 
     return (
         <ul className="roomlist">
-            <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
+            <Dropdown >
+                <Dropdown.Toggle variant={pinned ? "info" : "success"} id="dropdown-basic">
                     {props.title}
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="#" onClick={handleClickSetCurrent}>Set As Current</Dropdown.Item>
-                    <Dropdown.Item href="#" onClick={handleClickJoin}>Join</Dropdown.Item>
-                    <Dropdown.Item href="#" onClick={handleClickLeave}>Leave</Dropdown.Item>
-                    <Dropdown.Item href="#" onClick={handleClickDelete}>Delete</Dropdown.Item>
+                    <Dropdown.Item href="#" name="current-btn" onClick={handleClickSetCurrent}>Set As Current</Dropdown.Item>
+                    <Dropdown.Item href="#" name="join-btn" onClick={handleClickJoin}>Join</Dropdown.Item>
+                    <Dropdown.Item href="#" name="leave-btn" onClick={handleClickLeave}>Leave</Dropdown.Item>
+                    <Dropdown.Item href="#" name="delete-btn" onClick={handleClickDelete}>Delete</Dropdown.Item>
+                    <Dropdown.Item href="#" name="pin-btn" onClick={handleClickPin}>Pin</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
         </ul>
-
-
-
     )
 }
 
