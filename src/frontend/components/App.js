@@ -150,11 +150,14 @@ const App = () => {
 
     const attachFile = (request) => {
         apiFile(request).then(response => {
-            if (!response.result.ok)
+            if (!currentRoom.id || currentRoom.id < 1)
+                alert(`Please choose a chatroom before sending a file`)
+            else if (!response.result.ok)
                 alert(`File API not currently available`)
             else if (!response.result.nModified) 
-                alert(`Didn't attach the file`);
+                alert(`Didn't attach the file`)
             else {
+                alert(`File successfully attached`)
                 let request = {'id': currentRoomId};
                 setLoading(true);
                 apiChat(request).then ( chatroom => {
