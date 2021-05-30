@@ -24,7 +24,7 @@ const App = () => {
     const [list, setList] = useState([{'id':'0', 'title':'Initial room'}]);
     const [currentUser, setCurrentUser] = useState('roomadmin');
     const [currentRoomId, setCurrentRoomId] = useState('0');
-    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'users':['roomadmin'], 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
+    const [currentRoom, setCurrentRoom] = useState({'id':'0', 'files':'', 'users':['roomadmin'], 'title':'Inital room', 'chat':[{'user':'roomadmin', 'message':'hello'}]});
     const [loading, setLoading] = useState(false);
     const [pinnedRooms, setPinnedRooms] = useState([]);
 
@@ -150,7 +150,7 @@ const App = () => {
 
     const attachFile = (request) => {
         apiFile(request).then(response => {
-            if (!currentRoom.id || currentRoom.id < 1)
+            if (currentRoom.id < 1)
                 alert(`Please choose a chatroom before sending a file`)
             else if (!response.result.ok)
                 alert(`File API not currently available`)
@@ -161,12 +161,26 @@ const App = () => {
                 let request = {'id': currentRoomId};
                 setLoading(true);
                 apiChat(request).then ( chatroom => {
-                    setCurrentRoom(chatroom);
                     setLoading(false);
                 });
             }
         });
     };
+
+    const openFile = (request) => {
+            if (!currentRoom.files)
+                alert(`This room does not have a file -- please upload one`)
+            else {
+                alert(`File successfully opened: ${currentRoom.files}`)
+                let request = {'id': currentRoomId};
+                setLoading(true);
+                apiChat(request).then ( chatroom => {
+                    setCurrentRoom(chatroom);
+                    setLoading(false);
+                });
+          }
+        }
+
 
     const setPinned = (roomId) => {
         let index = pinnedRooms.indexOf(roomId);
@@ -202,7 +216,7 @@ const App = () => {
                 <Members currentRoom={currentRoom} />
                 <CurChatRoom currentRoom={currentRoom} currentUser={currentUser} />
                 <MessageBox currentRoomId={currentRoomId} currentUser={currentUser} updateRoom={updateRoom}
-                 attachFile={attachFile} multiUpdate={multiUpdate} />
+                 attachFile={attachFile} openFile={openFile} multiUpdate={multiUpdate} />
                 <Footer />
             </main>
         </UserContext.Provider>

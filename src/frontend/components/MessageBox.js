@@ -37,6 +37,17 @@ let MessageBox = (props) => {
         props.attachFile(request);
     }
 
+    const openFile = (e) => {
+        e.preventDefault(); 
+        let request = {
+            'id': props.currentRoomId,
+        };
+        props.openFile(request);
+    }
+
+
+
+
     return (
         <div className="messagebox">
             <form onSubmit={sendMessage}>
@@ -48,6 +59,9 @@ let MessageBox = (props) => {
                 <input type="file" id="file" name="file"></input>
                 <input type="submit" value="Attach"></input>
             </form>
+            <button onClick={openFile}>
+                Open File
+            </button>
         </div>
 
     );
