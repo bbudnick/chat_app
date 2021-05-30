@@ -6,6 +6,7 @@
 */
 
 import React from 'react';
+import { BsFileEarmarkArrowDown } from 'react-icons/bs';
 
 let MessageBox = (props) => {
     let multisend = false;
@@ -59,9 +60,9 @@ let MessageBox = (props) => {
                 <input type="file" id="file" name="file"></input>
                 <input type="submit" value="Attach"></input>
             </form>
-            <button onClick={openFile}>
-                Open File
-            </button>
+            <BsFileEarmarkArrowDown onClick={openFile} value="Open File"/>
+
+
         </div>
 
     );

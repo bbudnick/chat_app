@@ -13,6 +13,8 @@ import { apiCreate, apiList, apiJoin, apiLeave, apiUpdate, apiDelete, apiFile, a
 import CurChatRoom from './CurChatRoom';
 import MessageBox from './MessageBox';
 import Members from './Members';
+import { FaBeer } from 'react-icons/fa';
+
 
 const userObj = {
     user: "default"
@@ -169,10 +171,12 @@ const App = () => {
 
     const openFile = (request) => {
             if (!currentRoom.files)
-                alert(`This room does not have a file -- please upload one`)
+                alert(`This room does not have a file; please upload one`)
             else {
-                alert(`File successfully opened: ${currentRoom.files}`)
+                alert(`Beginning download ... `)
                 let request = {'id': currentRoomId};
+                let fileDownload = require('js-file-download');
+                fileDownload(currentRoom.files, 'chatdownload.txt');
                 setLoading(true);
                 apiChat(request).then ( chatroom => {
                     setCurrentRoom(chatroom);
@@ -210,6 +214,7 @@ const App = () => {
         <UserContext.Provider value={currentUser}>
             <main className="grid-container">
                 <Header />
+                <h3> Lets go for a <FaBeer />? </h3>
                 <NavBar setUser={setUser} createRoom={createRoom} multiJoin={multiJoin} />
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId} 
                     joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} setPinned={setPinned} />
