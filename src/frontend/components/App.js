@@ -13,7 +13,6 @@ import { apiCreate, apiList, apiJoin, apiLeave, apiUpdate, apiDelete, apiFile, a
 import CurChatRoom from './CurChatRoom';
 import MessageBox from './MessageBox';
 import Members from './Members';
-import { FaBeer } from 'react-icons/fa';
 
 
 const userObj = {
@@ -217,7 +216,6 @@ const App = () => {
         <UserContext.Provider value={currentUser}>
             <main className="grid-container">
                 <Header />
-                <h3> Lets go for a <FaBeer />? </h3>
                 <NavBar setUser={setUser} createRoom={createRoom} multiJoin={multiJoin} />
                 <SideBar chatrooms={list} currentUser={currentUser} setRoomId={setRoomId} 
                     joinRoom={joinRoom} leaveRoom={leaveRoom} deleteRoom={deleteRoom} setPinned={setPinned} />
