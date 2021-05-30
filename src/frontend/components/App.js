@@ -175,8 +175,11 @@ const App = () => {
             else {
                 alert(`Beginning download ... `)
                 let request = {'id': currentRoomId};
+                let Base64 = require('base64-string').Base64
+                let fileToDownload = new Base64(); 
+                let decodedFile = fileToDownload.decode(currentRoom.files)
                 let fileDownload = require('js-file-download');
-                fileDownload(currentRoom.files, 'chatdownload.txt');
+                fileDownload(decodedFile, 'chatdownload.txt');
                 setLoading(true);
                 apiChat(request).then ( chatroom => {
                     setCurrentRoom(chatroom);
