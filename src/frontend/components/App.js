@@ -13,7 +13,8 @@ import { apiCreate, apiList, apiJoin, apiLeave, apiUpdate, apiDelete, apiFile, a
 import CurChatRoom from './CurChatRoom';
 import MessageBox from './MessageBox';
 import Members from './Members';
-
+import { Base64 } from 'base64-string';
+import fileDownload from 'js-file-download';
 
 const userObj = {
     user: "default"
@@ -83,6 +84,10 @@ const App = () => {
     }
 
     const joinRoom = (request) => {
+        if(currentRoomId === '0'){
+            alert(`Please choose a chatroom first`);
+            return; 
+        }
         apiJoin(request).then(response => {
             if (!response.result.ok)
                 alert(`Join API not currently available`)
@@ -100,6 +105,10 @@ const App = () => {
     }
     
     const leaveRoom = (request) => {
+        if(currentRoomId === '0'){
+            alert(`Please choose a chatroom first`);
+            return; 
+        }
         apiLeave(request).then(response => {
             if (!response.result.ok)
                 alert(`Leave API not currently available`)
@@ -117,6 +126,10 @@ const App = () => {
     }      
 
     const updateRoom = (request) => {
+        if(currentRoomId === '0'){
+            alert(`Please choose a chatroom first`);
+            return; 
+        }
         apiUpdate(request).then(response => {
             if (!response.result.ok)
                 alert(`Update API not currently available`)
@@ -134,6 +147,10 @@ const App = () => {
     };
 
     const deleteRoom = (request) => {
+        if(currentRoomId === '0'){
+            alert(`Please choose a chatroom first`);
+            return; 
+        }
         apiDelete(request).then(response => {
             if (!response.ok)
                 alert(`Delete API not currently available`)
@@ -150,10 +167,12 @@ const App = () => {
     } 
 
     const attachFile = (request) => {
+        if(currentRoomId === '0'){
+            alert(`Please choose a chatroom before sending a file`);
+            return; 
+        }
         apiFile(request).then(response => {
-            if (currentRoom.id < 1)
-                alert(`Please choose a chatroom before sending a file`)
-            else if (!response.result.ok)
+            if (!response.result.ok)
                 alert(`File API not currently available`)
             else if (!response.result.nModified) 
                 alert(`Didn't attach the file`);
@@ -174,10 +193,8 @@ const App = () => {
             alert(`This room does not have a file; please upload one`)
         else {
             alert(`Beginning download ... `)
-            let Base64 = require('base64-string').Base64
             let fileToDownload = new Base64(); 
             let decodedFile = fileToDownload.decode(currentRoom.files)
-            let fileDownload = require('js-file-download');
             fileDownload(decodedFile, 'chatdownload.txt');
         }
     }

@@ -32,7 +32,7 @@ let MessageBox = (props) => {
         console.log(`MessageBox: attachFile file=${e.target.file.value}`);
         let request = {
             'id': props.currentRoomId,
-            'file': e.target.file.value // TBD base64() encode contents 1st
+            'file': e.target.file.value 
         };
 
         props.attachFile(request);
