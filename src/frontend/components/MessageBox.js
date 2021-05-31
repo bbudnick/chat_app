@@ -40,14 +40,8 @@ let MessageBox = (props) => {
 
     const openFile = (e) => {
         e.preventDefault(); 
-        let request = {
-            'id': props.currentRoomId,
-        };
-        props.openFile(request);
+        props.openFile();
     }
-
-
-
 
     return (
         <div className="messagebox">
@@ -61,8 +55,6 @@ let MessageBox = (props) => {
                 <input type="submit" value="Attach"></input>
             </form>
             <BsFileEarmarkArrowDown onClick={openFile} value="Open File"/>
-
-
         </div>
 
     );
