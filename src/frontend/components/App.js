@@ -168,21 +168,18 @@ const App = () => {
         });
     };
 
-    const openFile = (request) => {
-            if (!currentRoom.files)
-                alert(`This room does not have a file; please upload one`)
-            else {
-                alert(`Beginning download ... `)
-                let request = {'id': currentRoomId};
-                let Base64 = require('base64-string').Base64
-                let fileToDownload = new Base64(); 
-                let decodedFile = fileToDownload.decode(currentRoom.files)
-                let fileDownload = require('js-file-download');
-                fileDownload(decodedFile, 'chatdownload.txt');
-                };
-          }
+    const openFile = () => {
+        if (!currentRoom.files)
+            alert(`This room does not have a file; please upload one`)
+        else {
+            alert(`Beginning download ... `)
+            let Base64 = require('base64-string').Base64
+            let fileToDownload = new Base64(); 
+            let decodedFile = fileToDownload.decode(currentRoom.files)
+            let fileDownload = require('js-file-download');
+            fileDownload(decodedFile, 'chatdownload.txt');
         }
-
+    }
 
     const setPinned = (roomId) => {
         let index = pinnedRooms.indexOf(roomId);
