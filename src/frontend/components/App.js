@@ -179,11 +179,7 @@ const App = () => {
                 let decodedFile = fileToDownload.decode(currentRoom.files)
                 let fileDownload = require('js-file-download');
                 fileDownload(decodedFile, 'chatdownload.txt');
-                setLoading(true);
-                apiChat(request).then ( chatroom => {
-                    setCurrentRoom(chatroom);
-                    setLoading(false);
-                });
+                };
           }
         }
 
